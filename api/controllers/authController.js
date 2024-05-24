@@ -41,13 +41,10 @@ export const signin=async(req,res)=>{
         return res.status(400).json("Invalid Password");
     }
 
-
-    // const token=jwt.sign(
-    //     {id:validUser._id,isAdmin:validUser.isAdmin}, 
-    // )
     try {
+        console.log("fine you are good to go");
         return res.status(200).json({message:"login successfully"});
     } catch (error) {
-        
+        console.log(`error: ${error}`)
     }
 }
