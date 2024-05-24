@@ -3,23 +3,32 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv'
 import userRoutes from './routes/userRoutes.js'
 import authRoutes from './routes/authRoutes.js'
+import testRoutes from './routes/testRoutes.js'
+import fileRoutes from "./routes/fileRoutes.js"
 import cors from 'cors'
-dotenv.config();
+import cookieParser from 'cookie-parser';
+import {makeConecction} from './controllers/connetionController.js' 
+
+const PORT_NUMBER = 3001
+
+dotenv.config()
 const app=express();
-mongoose.
-connect(process.env.MONGO_URL)
-.then(()=>{
-    console.log("MongoDb is connected")
-}).catch((err)=>{
-    console.log(err)
-})
 
+app.use(express.json())
+app.use(cors())
+app.use(cookieParser())
 
-app.listen(3000,()=>{
-    console.log("Server is listening on port 3000");
-})
+// make db connection
+makeConecction()
+
 app.use(express.json())
 app.use(cors());
 
-app.use('/api/user',userRoutes)
-app.use('/api/auth',authRoutes)
+app.use('/api/user',userRoutes);
+app.use('/api/auth',authRoutes);
+app.use("/api/test" , testRoutes);
+app.use("/api/file" ,fileRoutes);
+
+app.listen(PORT_NUMBER , ()=>{
+    console.log(`App is listening at PORT = ${PORT_NUMBER}`)
+})
