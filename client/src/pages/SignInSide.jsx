@@ -13,6 +13,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -31,13 +38,38 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
-  const handleSubmit = (event) => {
+
+  const navigate=useNavigate();
+  const [formData,setFormData]=useState();
+  const [error,setErrorMessage]=useState(null);
+  const handleChange=(e)=>{
+    setFormData({...formData,[e.target.id]:e.target.value.trim()})
+  }
+
+  console.log('formData', formData);
+
+  const handleSubmit = async (event) => {
+
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    if(!formData.email || !formData.password){
+      return setErrorMessage("Please fill out all fields");
+    }
+
+    try {
+      setErrorMessage(null);
+      const res= await axios.post('/api/auth/signin',formData,{
+        headers:{'Content-Type':'application/json'}
+      });
+      console.log('res', res)
+      if(res.status==200){
+        navigate('/');
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+      console.log(error.response.data);
+    }
+
+    
   };
 
   return (
@@ -82,6 +114,7 @@ export default function SignInSide() {
                 id="email"
                 label="Email Address"
                 name="email"
+                onChange={handleChange}
                 autoComplete="email"
                 autoFocus
               />
@@ -91,6 +124,7 @@ export default function SignInSide() {
                 fullWidth
                 name="password"
                 label="Password"
+                onChange={handleChange}
                 type="password"
                 id="password"
                 autoComplete="current-password"
