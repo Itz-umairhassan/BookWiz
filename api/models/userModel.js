@@ -21,7 +21,12 @@ const userSchema = new mongoose.Schema({
     isAdmin:{
         type:Boolean,
         default:false,
+    },
+    folders:{
+        type: [mongoose.Schema.Types.ObjectId],
+        default:[]
     }
+    
 },{ timestamps:true})
 
 const User=mongoose.model('User',userSchema)
