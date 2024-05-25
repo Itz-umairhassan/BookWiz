@@ -1,11 +1,12 @@
 import express from "express"
-import mongodb from "mongodb"
-
-import {folderCreation} from "../controllers/folderController.js";
+import {validateUser} from "../middleware/authMiddleWare.js"
+import {folderCreation , getAllFiles , removeFolder} from "../controllers/folderController.js";
 
 const router = express.Router();
-const uid = mongodb.ObjectId;
+router.use(validateUser);
 
-router.post('/create' , folderCreation)
+router.post('/create' , folderCreation);
+router.get('/getFiles' , getAllFiles);
+router.post('/remove' , removeFolder);
 
 export default router
