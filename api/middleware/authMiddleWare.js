@@ -2,10 +2,22 @@ import Folder from "../models/folderModel.js";
 import User from "../models/userModel.js";
 import { errorMessage , serverError,successMessage } from "../helpers/helperFuncs.js";
 import mongodb from "mongodb"
+import jwt from "jsonwebtoken"
 
-export const validateUser = (req , res , next)=>{
-    console.log("this is validation middleware");
-    next();
+export const validateUser = async (req , res , next)=>{
+    try{
+
+        const token = req.cookies.access_token;
+        const payload = jwt.verify(token , process.env.JWT_SECRET);
+        req.body.userId = payload['id']
+        console.log("user validated successfuly");
+        next();
+
+    }catch(error){
+        console.log(`error : ${error}`);
+        res.clearCookie('access-token');
+        res.status(500).json(errorMessage("Error in user validation"));
+    }
 }
 
 // to see that user has provided userId 
