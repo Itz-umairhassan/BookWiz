@@ -16,7 +16,7 @@ export const validateUser = async (req , res , next)=>{
     }catch(error){
         console.log(`error : ${error}`);
         res.clearCookie('access-token');
-        res.status(500).json(errorMessage("Error in user validation"));
+        res.status(401).json(errorMessage("Error in user validation"));
     }
 }
 

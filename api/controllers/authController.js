@@ -32,6 +32,7 @@ export const signup = async (req, res) => {
 
 
 export const signin=async(req,res)=>{
+    console.log("user is signing in");
     const {email,password}=req.body;
     if(!email || !password || email===""|| password===""){
         return res.status(400).json(errorMessage("all fields required"))
@@ -40,14 +41,14 @@ export const signin=async(req,res)=>{
 
     const validUser=await User.findOne({email})
     if(!validUser){
-        return res.status(400).json("User not Found");
+        return res.status(400).json(errorMessage("Invalid Email"));
     }
 
     console.log('validUser', validUser)
     const validPassword=bcrypt.compareSync(password,validUser.password);
         
     if(!validPassword){
-        return res.status(404).json({message:"Invalid Password"});
+        return res.status(404).json(errorMessage("Invalid Password"));
     }
     try {
         const payload = {
@@ -60,7 +61,7 @@ export const signin=async(req,res)=>{
       
       const {password:pass,...rest}=validUser._doc;
       console.log(`token: ${token}`)
-      
+
       return res.status(200).cookie('access_token', token, {
         httpOnly: true
     }).json(rest)

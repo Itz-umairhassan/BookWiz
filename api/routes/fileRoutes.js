@@ -18,7 +18,6 @@ router.get('/testit' , (req,res)=>{
 router.post('/upload' ,userExists,folderExists,userFolderAuth, async (req , res)=>{
     // suppose file is uploaded and a url is generated
     try{
-        console.log(`cookies = ${req.cookies.access_token}`);
         const {userId , folderId , fileName} = req.body;
         console.log(`user id is ${userId}`)
         const fileUrl = "dummyurl.com";
