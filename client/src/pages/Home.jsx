@@ -1,7 +1,14 @@
 import React from 'react'
-
-export default function Home() {
+import { SideBar } from '../components/SideBar/SideBar'
+import Main from '../components/Main/Main.jsx'
+import './Home.css'
+const Home = () => {
   return (
-    <div>Home</div>
+    <div className='container' >
+      <SideBar/>
+      <Main/>
+    </div>
   )
 }
+
+export default Home
