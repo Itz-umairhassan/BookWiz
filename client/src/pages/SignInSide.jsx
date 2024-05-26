@@ -46,12 +46,10 @@ export default function SignInSide() {
     setFormData({...formData,[e.target.id]:e.target.value.trim()})
   }
 
-  console.log('formData', formData);
-
   const handleSubmit = async (event) => {
-
+    console.log('formData = ', formData);
     event.preventDefault();
-    if(!formData.email || !formData.password){
+    if(!formData || !formData.email || !formData.password){
       return setErrorMessage("Please fill out all fields");
     }
 
@@ -60,13 +58,14 @@ export default function SignInSide() {
       const res= await axios.post('/api/auth/signin',formData,{
         headers:{'Content-Type':'application/json'}
       });
-      console.log('res', res)
+
+      console.log('res = ', res)
       if(res.status==200){
         navigate('/');
       }
+
     } catch (error) {
-      setErrorMessage(error.message);
-      console.log(error.response.data);
+      setErrorMessage(error.response.data["message"]);
     }
 
     
@@ -153,6 +152,9 @@ export default function SignInSide() {
                   </Link>
                 </Grid>
               </Grid>
+              <Typography variant="body2" color="error" align="center">
+              {!error ? "" : 'Error: ' + error}  
+              </Typography>
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
