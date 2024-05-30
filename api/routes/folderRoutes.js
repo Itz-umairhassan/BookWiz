@@ -7,7 +7,7 @@ router.use(validateUser);
 router.use(userExists);
 
 router.post('/create' , folderCreation);
-router.get('/getFiles' ,folderExists, userFolderAuth, getAllFiles);
+router.get('/getFiles/:folderId' ,folderExists, userFolderAuth, getAllFiles);
 router.post('/remove' ,folderExists,userFolderAuth, removeFolder);
 
 export default router

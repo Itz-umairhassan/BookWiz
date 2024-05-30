@@ -37,7 +37,11 @@ export const folderCreation =  async (req , res) =>{
 
 export const getAllFiles = async (req , res)=>{
     try{
-        const {folderId} = req.body;
+        let {folderId} = req.body;
+        if(!folderId){
+            folderId = req.params.folderId;
+        }
+        console.log(`folder id is ${folderId}`);
         const folderObjId = new mongodb.ObjectId(folderId);
         var folder = await Folder.findById(folderObjId);
 
@@ -48,8 +52,8 @@ export const getAllFiles = async (req , res)=>{
         res.status(200).json(successMessage("fetched successfuly" , files))
 
     }catch(error){
-        console.log(`error: ${error}`);
-        res.status(200).json(serverError());
+        console.log(`see error: ${error}`);
+        res.status(500).json(serverError());
     }
 }
 
