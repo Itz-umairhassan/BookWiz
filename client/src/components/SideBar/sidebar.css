@@ -22,11 +22,12 @@
     align-items: center;
     gap: 10px; /* corrected from Bap: 1@px */
     padding: 10px 15px; /* corrected from 1@px 1Spx */
-    background-color: #e6e0f1; /* corrected from Ml#e6eofl */
+    background-color: #1b212b; /* corrected from Ml#e6eofl */
     border-radius: 5px; /* corrected from S@px */
     font-size: 14px; /* provided a default font size */
     color: grey; /* corrected from Mgrey */
     cursor: pointer;
+    margin-left: 10px;
   }
 
   .sidebar .recent{
