@@ -4,7 +4,7 @@ import './sidebar.css'
 import { assets } from '../../assets/assets.js'
 export const SideBar = () => {
     const [extended, setExtended] = useState(false)
-
+    
     return (
         <div className='sidebar'>
             <div className="top">

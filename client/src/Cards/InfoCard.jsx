@@ -1,9 +1,17 @@
 import React from 'react'
 import { Card, CardBody } from '@windmill/react-ui'
-
+import { Navigate, redirect , useNavigate} from 'react-router-dom'
 function InfoCard({ title, value, children: icon }) {
+  const navigate = useNavigate();
+
+  function handleClick(){
+    navigate("/app/files/382932" , {replace:true});
+  }
+
   return (
-    <Card>
+    <Card onClick = {()=>{console.log("fine");
+      handleClick(); 
+    }}>
       <CardBody className="flex items-center">
         {icon}
         <div>

@@ -37,6 +37,7 @@ export const folderCreation =  async (req , res) =>{
 
 export const getAllFiles = async (req , res)=>{
     try{
+        console.log("hehe request");
         const {folderId} = req.body;
         const folderObjId = new mongodb.ObjectId(folderId);
         var folder = await Folder.findById(folderObjId);

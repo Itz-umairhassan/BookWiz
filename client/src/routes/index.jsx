@@ -7,6 +7,7 @@ import Notes from '../pages/Forms'
 import Profile from '../pages/Buttons'
 // const Charts = lazy(() => import('../pages/Charts'))
 import Trash from '../pages/Tables'
+import Files from '../pages/Files'
 // const Modals = lazy(() => import('../pages/Modals'))
 // const Tables = lazy(() => import('../pages/Tables'))
 // const Page404 = lazy(() => import('../pages/404'))
@@ -43,10 +44,10 @@ const routes = [
     path: '/trash',
     component: Trash,
    },
-  // {
-  //   path: '/modals',
-  //   component: Modals,
-  // },
+  {
+    path: '/files/:id',
+    component: Files,
+  },
   // {
   //   path: '/tables',
   //   component: Tables,

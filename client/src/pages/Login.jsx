@@ -1,5 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+
 
 import ImageLight from '../assets/img/login-office.jpeg'
 import ImageDark from '../assets/img/login-office-dark.jpeg'
@@ -8,7 +13,44 @@ import GithubIcon from '../icons/github.svg?react'
 import TwitterIcon from '../icons/twitter.svg?react'
 import { Label, Input, Button } from '@windmill/react-ui'
 
+
 function Login() {
+
+  const navigate=useNavigate();
+  const [formData,setFormData]=useState();
+  const [error,setErrorMessage]=useState(null);
+  const handleChange=(e)=>{
+    setFormData({...formData,[e.target.id]:e.target.value.trim()})
+  }
+
+  const handleSubmit = async (event) => {
+    console.log('formData = ', formData);
+    event.preventDefault();
+    if(!formData || !formData.email || !formData.password){
+      return setErrorMessage("Please fill out all fields");
+    }
+
+    try {
+      setErrorMessage(null);
+      const res= await axios.post('/api/auth/signin',formData,{
+        headers:{'Content-Type':'application/json'}
+      });
+
+      console.log('res = ', res)
+      if(res.status==200){
+        navigate('/app/mydocuments',{replace:true});
+      }
+
+    } catch (error) {
+      console.log(error);
+      setErrorMessage(error.response.data["message"]);
+    }
+
+    
+  };
+
+
+
   return (
   
     <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
@@ -34,15 +76,15 @@ function Login() {
               <h1 className="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">Login</h1>
               <Label>
                 <span>Email</span>
-                <Input className="mt-1" type="email" placeholder="john@doe.com" />
+                <Input className="mt-1" id="email" name="email" type="email" placeholder="john@doe.com"   onChange={handleChange} />
               </Label>
 
               <Label className="mt-4">
                 <span>Password</span>
-                <Input className="mt-1" type="password" placeholder="***************" />
+                <Input className="mt-1" id="password" name="password" type="password" placeholder="***************"   onChange={handleChange}/>
               </Label>
 
-              <Button className="mt-4" block tag={Link} to="/app">
+              <Button onClick={handleSubmit} className="mt-4" block tag={Link} to="/app">
                 Log in
               </Button>
 
