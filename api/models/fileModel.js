@@ -5,9 +5,17 @@ const fileSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    fileUrl:{
-        type: String,
+    folderId:{
+        type: mongoose.Schema.Types.ObjectId,
         required: true
+    },
+    fileType:{
+        type: String,
+        default: "pdf"
+    },
+    fileData:{
+        type: String,
+        required:true
     }
 },{
     timestamps:true

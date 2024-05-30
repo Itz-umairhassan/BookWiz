@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-
+import React, { useState, useEffect, useCallback } from 'react'
+import { useDropzone } from 'react-dropzone';
 import CTA from '../components/CTA'
 import InfoCard from '../Cards/InfoCard'
 // import ChartCard from '../components/Chart/ChartCard'
@@ -9,6 +9,9 @@ import PageTitle from '../Typography/PageTitle'
 import { ChatIcon, CartIcon, MoneyIcon, PeopleIcon } from '../icons'
 import RoundIcon from '../components/RoundIcon'
 import response from '../utils/demo/tableData'
+import axios from 'axios';
+import { HeartIcon } from '../icons';
+
 import {
   TableBody,
   TableContainer,
@@ -20,12 +23,18 @@ import {
   Avatar,
   Badge,
   Pagination,
+  Button
 } from '@windmill/react-ui'
+import { useParams } from 'react-router-dom';
 
 
 function Files() {
   const [page, setPage] = useState(1)
   const [data, setData] = useState([])
+  const [isUploading, setIsUploading] = useState(false);
+ 
+  // get folderId from url
+  const {folderId} = useParams();
 
   // pagination setup
   const resultsPerPage = 10
@@ -40,12 +49,46 @@ function Files() {
   // here you would make another server request for new data
   useEffect(() => {
     setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage))
-  }, [page])
+  }, [page]);
+
+  // code for uploading files
+  const onDrop = useCallback((acceptedFiles) => {
+      acceptedFiles.forEach((file) => {
+        setIsUploading(true);
+
+        const formData = new FormData();
+        formData.append('file' , file);
+        formData.append("folderId" , folderId);
+        for(let pair of formData){
+          console.log(pair[0], pair[1])
+        }
+        axios.post('/api/file/upload', formData, {
+          'Content-Type': 'multipart/form-data',
+          withCredentials: true
+        }).then(response => {
+
+          console.log(response);
+          setIsUploading(false);
+
+        }).catch(error => {
+
+          console.error(error);
+          setIsUploading(false);
+
+        });
+      });
+  }, []);
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (
     <>
-    
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <PageTitle>Files</PageTitle>
+      <div {...getRootProps()}>
+        <input {...getInputProps()} />
+        <Button iconLeft={HeartIcon}>Icon left</Button>
+      </div>
+    </div>
 
       <TableContainer>
         <Table>
