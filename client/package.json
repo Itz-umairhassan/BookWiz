@@ -15,6 +15,8 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.18",
     "@mui/material": "^5.15.18",
+    "@nextui-org/react": "^2.4.0",
+    "@nextui-org/table": "^2.0.34",
     "antd": "^5.17.3",
     "axios": "^1.6.8",
     "css": "^3.0.0",

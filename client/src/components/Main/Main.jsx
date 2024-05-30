@@ -6,23 +6,23 @@ const Main = () => {
     return (
         <div className='main'>
             <div className='nav'>
-                <p>Gemini</p>
+                <p>BookWiz</p>
                 <img src={assets.user_icon} alt="" />
             </div>
             <div className="main-container">
                 <div className="greet">
-                    <p><span>Hello, Dev.</span></p>
-                    <p>How can I help you today?</p>
+                    <p><span>Welcome to BookWiz.</span></p>
+                    <p>Let's chat with your personal documents !</p>
                 </div>
 
                 <div className="cards">
                     <div className="card">
-                        <p>Suggest beautiful places to see on an upcoming road trip</p>
+                        <p>What is article 6 in Pakistan constitution ?</p>
                         <img src={assets.compass_icon} alt="" />
                     </div>
 
                     <div className="card">
-                        <p>Briefly summarize this concept: urban planning</p>
+                        <p>Who is soverign in Pakistan Law.</p>
                         <img src={assets.bulb_icon} alt="" />
                     </div>
 

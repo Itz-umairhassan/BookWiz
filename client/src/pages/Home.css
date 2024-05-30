@@ -1,5 +1,5 @@
 .container{
     min-height: 100vh;
     display:flex ;
-    background-color: aqua;
+    background-color: rgb(17, 30, 40,1);
 }
