@@ -46,7 +46,7 @@ const routes = [
     component: Trash,
    },
   {
-    path: '/files/:id',
+    path: '/files/:folderId',
     component: Files,
   },
   {

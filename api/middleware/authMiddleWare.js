@@ -9,7 +9,7 @@ export const validateUser = async (req , res , next)=>{
 
         const token = req.cookies.access_token;
         const payload = jwt.verify(token , process.env.JWT_SECRET);
-        req.body.userId = payload['id']
+        req.userId = payload["id"]
         console.log("user validated successfuly");
         next();
 
@@ -24,7 +24,8 @@ export const validateUser = async (req , res , next)=>{
 // and relevant user exists
 export const userExists =  async (req , res , next)=>{
     try{
-        const {userId} = req.body;
+        
+        const userId = req.userId;
         if(!userId){
             res.status(500).json(errorMessage("user id is required"));
             return;
@@ -37,7 +38,7 @@ export const userExists =  async (req , res , next)=>{
 
         next();
     }catch(error){
-        console.log(error);
+        console.log(`error : ${error}`);
         res.status(500).json(serverError());
     }
 }
@@ -45,11 +46,12 @@ export const userExists =  async (req , res , next)=>{
 // to see if folder exists and user has provided folderId....
 export const folderExists = async (req , res  ,next)=>{
     try{
-        let {folderId} = req.body;
+        let folderId = req.body.folderId;
+        console.log(req.body)
         if(!folderId){
             folderId = req.params.folderId
         }
-        console.log(`folder id is ${folderId}`);
+
         if(!folderId){
             res.status(500).json(errorMessage("folder id is required"));
             return;
@@ -70,8 +72,8 @@ export const folderExists = async (req , res  ,next)=>{
 
 export const userFolderAuth = async (req,res , next)=>{
     try{
-        let {userId , folderId} = req.body;
-
+        let userId = req.userId;
+        let folderId = req.body.folderId;
         if(!folderId){
             folderId = req.params.folderId;
         }
