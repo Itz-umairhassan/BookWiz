@@ -8,6 +8,7 @@ import Profile from '../pages/Buttons'
 // const Charts = lazy(() => import('../pages/Charts'))
 import Trash from '../pages/Tables'
 import Files from '../pages/Files'
+import Chat from '../components/Chat'
 // const Modals = lazy(() => import('../pages/Modals'))
 // const Tables = lazy(() => import('../pages/Tables'))
 // const Page404 = lazy(() => import('../pages/404'))
@@ -48,10 +49,10 @@ const routes = [
     path: '/files/:id',
     component: Files,
   },
-  // {
-  //   path: '/tables',
-  //   component: Tables,
-  // },
+  {
+    path: '/chat/:fileId',
+    component: Chat,
+  },
   // {
   //   path: '/404',
   //   component: Page404,
