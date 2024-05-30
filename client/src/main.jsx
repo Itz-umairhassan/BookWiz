@@ -1,15 +1,3 @@
-// import React from 'react'
-// import ReactDOM from 'react-dom/client'
-// import App from './App.jsx'
-// import './index.css'
-
-// ReactDOM.createRoot(document.getElementById('root')).render(
-//   <React.StrictMode >
-//     <App id='root' />
-//   </React.StrictMode>,
-// )
-
-
 import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import './assets/css/tailwind.output.css'
@@ -19,11 +7,6 @@ import ThemedSuspense from './components/ThemedSuspense'
 import { Windmill } from '@windmill/react-ui'
 import * as serviceWorker from './serviceWorker'
 
-
-// if (process.env.NODE_ENV !== 'production') {
-//   const axe = require('react-axe')
-//   axe(React, ReactDOM, 1000)
-// }
 
 ReactDOM.render(
   <SidebarProvider>

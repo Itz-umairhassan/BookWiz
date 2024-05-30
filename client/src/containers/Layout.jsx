@@ -2,7 +2,7 @@ import React, { useContext, Suspense, useEffect, lazy } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import routes from "../routes";
 
-import Sidebar from "../components/SideBar";
+import Sidebar from "../components/SideBar/index.jsx";
 import Header from "../components/Header";
 import Main from "./Main";
 import ThemedSuspense from "../components/ThemedSuspense";
