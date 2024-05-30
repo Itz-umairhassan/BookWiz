@@ -12,6 +12,7 @@ import response from '../utils/demo/tableData'
 import axios from 'axios';
 import { HeartIcon, EditIcon, TrashIcon } from '../icons';
 
+
 import {
   TableBody,
   TableContainer,
@@ -106,9 +107,10 @@ function Files() {
   return (
     <>
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <PageTitle>Files</PageTitle>
+      <i class="fa-solid fa-upload"></i>
       <div {...getRootProps()}>
         <input {...getInputProps()} />
+        <i class="fa-solid fa-upload">Files</i>
         <Button iconLeft={HeartIcon}>Upload File</Button>
       </div>
     </div>
