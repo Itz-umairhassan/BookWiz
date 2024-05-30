@@ -26,7 +26,7 @@ import  DropdownIcon  from './dropdown.svg?react'
 import  OutlinePersonIcon  from './outlinePerson.svg?react'
 import  OutlineCogIcon  from './outlineCog.svg?react'
 import  OutlineLogoutIcon  from './outlineLogout.svg?react'
-
+import fileIcon from './file12.svg?react'
 export {
   ButtonsIcon,
   CardsIcon,
@@ -56,4 +56,5 @@ export {
   OutlinePersonIcon,
   OutlineCogIcon,
   OutlineLogoutIcon,
+  fileIcon
 }
