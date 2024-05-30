@@ -45,7 +45,11 @@ export const userExists =  async (req , res , next)=>{
 // to see if folder exists and user has provided folderId....
 export const folderExists = async (req , res  ,next)=>{
     try{
-        const {folderId} = req.body;
+        let {folderId} = req.body;
+        if(!folderId){
+            folderId = req.params.folderId
+        }
+        console.log(`folder id is ${folderId}`);
         if(!folderId){
             res.status(500).json(errorMessage("folder id is required"));
             return;
@@ -66,9 +70,15 @@ export const folderExists = async (req , res  ,next)=>{
 
 export const userFolderAuth = async (req,res , next)=>{
     try{
-        const {userId , folderId} = req.body;
+        let {userId , folderId} = req.body;
+
+        if(!folderId){
+            folderId = req.params.folderId;
+        }
         const userFolders = (await User.findById(new mongodb.ObjectId(userId)))["folders"];
         let userHasFolder = false;
+        console.log(`user id is ${userId}`);
+        console.log(userFolders);
         for(let f of userFolders){
             if(f.equals(new mongodb.ObjectId(folderId))){
                 userHasFolder = true;
@@ -82,7 +92,7 @@ export const userFolderAuth = async (req,res , next)=>{
         }
 
     }catch(error){
-        console.log(`error : ${error}`)
+        console.log(`where error : ${error}`)
         res.status(500).json(serverError()); 
     }
 };
