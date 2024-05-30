@@ -44,7 +44,7 @@
     "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "@windmill/react-ui": "0.3.1",
-    "autoprefixer": "^10.4.17",
+    "autoprefixer": "^10.4.19",
     "axios": "^1.6.8",
     "classnames": "^2.5.1",
     "eslint": "^8.56.0",
