@@ -4,7 +4,7 @@ import { errorMessage , serverError,successMessage } from "../helpers/helperFunc
 import mongodb from "mongodb"
 import jwt from "jsonwebtoken"
 
-export const validateUser = async (req , res , next)=>{
+export const    validateUser = async (req , res , next)=>{
     try{
 
         const token = req.cookies.access_token;
