@@ -9,6 +9,9 @@ import PageTitle from '../Typography/PageTitle'
 import { ChatIcon, CartIcon, MoneyIcon, PeopleIcon } from '../icons'
 import RoundIcon from '../components/RoundIcon'
 import response from '../utils/demo/tableData'
+import { Button } from '@windmill/react-ui'
+import Modals from './Modals'
+
 import {
   TableBody,
   TableContainer,
@@ -22,6 +25,9 @@ import {
   Pagination,
 } from '@windmill/react-ui'
 import axios from 'axios'
+import { model } from 'mongoose'
+import { render } from 'react-dom'
+import CreateFolderModal from '../Modals/CreateFolderModal'
 
 
 function Dashboard() {
@@ -29,6 +35,19 @@ function Dashboard() {
   const [data, setData] = useState([])
   const [folders , setFolders] = useState([]);
   const [spin , setSpin] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  function openModal() {
+    setIsModalOpen(true)
+  }
+
+  function closeModal(newFolder) {
+    if(newFolder){
+      setFolders(prevFolders => [...prevFolders, newFolder]);
+    }
+    setIsModalOpen(false)
+  }
+
   // pagination setup
   const resultsPerPage = 10
   const totalResults = response.length
@@ -54,6 +73,7 @@ function Dashboard() {
       setSpin(false);
     }
   }
+
   // on page change, load new sliced data
   // here you would make another server request for new data
   useEffect(() => {
@@ -64,47 +84,30 @@ function Dashboard() {
 
   return (
     <>
-    
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <PageTitle>MyDocuments</PageTitle>
+      <Button onClick={openModal} size="large">
+        Create Folder
+      </Button>
+      <CreateFolderModal isModelOpen={isModalOpen} closeModal={closeModal}/>
 
+    </div>
       {/* <!-- Cards --> */}
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-        
-        <InfoCard title="umair.hassan" value="DSA Stuff">
-          <RoundIcon
-            icon={PeopleIcon}
-            iconColorClass="text-orange-500 dark:text-orange-100"
-            bgColorClass="bg-orange-100 dark:bg-orange-500"
-            className="mr-4"
-          />
-        </InfoCard>
-
-        <InfoCard title="OOP" value="Object Pillars">
-          <RoundIcon
-            icon={MoneyIcon}
-            iconColorClass="text-green-500 dark:text-green-100"
-            bgColorClass="bg-green-100 dark:bg-green-500"
-            className="mr-4"
-          />
-        </InfoCard>
-
-        <InfoCard title="OOS" value="Synchronization">
-          <RoundIcon
-            icon={CartIcon}
-            iconColorClass="text-blue-500 dark:text-blue-100"
-            bgColorClass="bg-blue-100 dark:bg-blue-500"
-            className="mr-4"
-          />
-        </InfoCard>
-
-        <InfoCard title="DB" value="DML">
-          <RoundIcon
-            icon={ChatIcon}
-            iconColorClass="text-teal-500 dark:text-teal-100"
-            bgColorClass="bg-teal-100 dark:bg-teal-500"
-            className="mr-4"
-          />
-        </InfoCard>
+        {spin ? 'Loading....' : (
+          folders.map((folder) => {
+            return (
+              <InfoCard _folder={folder}>
+                <RoundIcon
+                  icon={ChatIcon}
+                  iconColorClass="text-teal-500 dark:text-teal-100"
+                  bgColorClass="bg-teal-100 dark:bg-teal-500"
+                  className="mr-4"
+                />
+              </InfoCard>
+            )
+          })
+        )}
       </div>
 
       {/* <PageTitle>Charts</PageTitle>
