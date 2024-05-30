@@ -10,7 +10,8 @@ const router=express.Router();
 
 router.get('/folders',validateUser,userExists,async (req,res)=>{
     try{
-        const {userId} = req.body;
+        const userId = req.userId;
+        console.log("user id is " + userId);
         const user = await User.findById(new mongodb.ObjectId(userId));
         let folders = [];
         for(let folder of user["folders"]){

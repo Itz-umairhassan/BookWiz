@@ -72,6 +72,7 @@ export const folderExists = async (req , res  ,next)=>{
 
 export const userFolderAuth = async (req,res , next)=>{
     try{
+        console.log("user folder auth");
         let userId = req.userId;
         let folderId = req.body.folderId;
         if(!folderId){
@@ -79,7 +80,7 @@ export const userFolderAuth = async (req,res , next)=>{
         }
         const userFolders = (await User.findById(new mongodb.ObjectId(userId)))["folders"];
         let userHasFolder = false;
-        console.log(`user id is ${userId}`);
+        console.log(`user uid is ${userId}`);
         console.log(userFolders);
         for(let f of userFolders){
             if(f.equals(new mongodb.ObjectId(folderId))){
