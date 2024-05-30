@@ -38,10 +38,14 @@ export const folderCreation =  async (req , res) =>{
 export const getAllFiles = async (req , res)=>{
     try{
         console.log("hehe request");
-        const {folderId} = req.body;
+        let {folderId} = req.body;
+        if(!folderId){
+            folderId = req.params.folderId;
+        }
+        console.log("folder id " + folderId)
         const folderObjId = new mongodb.ObjectId(folderId);
         var folder = await Folder.findById(folderObjId);
-
+        console.log(folder)
         var files = []
         for(let file of folder.files){
            files.push(await File.findById(file));

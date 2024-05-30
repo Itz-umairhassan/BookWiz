@@ -10,7 +10,7 @@ import { ChatIcon, CartIcon, MoneyIcon, PeopleIcon } from '../icons'
 import RoundIcon from '../components/RoundIcon'
 import response from '../utils/demo/tableData'
 import axios from 'axios';
-import { HeartIcon } from '../icons';
+import { HeartIcon, EditIcon, TrashIcon } from '../icons';
 
 import {
   TableBody,
@@ -25,17 +25,18 @@ import {
   Pagination,
   Button
 } from '@windmill/react-ui'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams} from 'react-router-dom';
 
 
 function Files() {
   const [page, setPage] = useState(1)
   const [data, setData] = useState([])
   const [isUploading, setIsUploading] = useState(false);
- 
+  const [allFiles , setAllFiles] = useState([]);
+
   // get folderId from url
   const {folderId} = useParams();
-
+  const navigate = useNavigate();
   // pagination setup
   const resultsPerPage = 10
   const totalResults = response.length
@@ -45,10 +46,32 @@ function Files() {
     setPage(p)
   }
 
+  const handleFileLoading = async ()=>{
+    try{
+      console.log("send request");
+      const res = await axios.get(`/api/folder/getFiles/${folderId}` , {
+        withCredentials: true
+      });
+
+      console.log(res);
+      setAllFiles(res.data.payload);
+    }catch(error){
+      console.log(error);
+    }
+  }
+
+  // navigate to chat module for particular file
+  const handleChatNavigation = (fileId)=>{
+    navigate(`/app/chat/${fileId}`,{replace:true})
+  }
+
   // on page change, load new sliced data
   // here you would make another server request for new data
   useEffect(() => {
-    setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage))
+    setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage));
+    console.log("Loading files triggered");
+    handleFileLoading();
+
   }, [page]);
 
   // code for uploading files
@@ -86,7 +109,7 @@ function Files() {
       <PageTitle>Files</PageTitle>
       <div {...getRootProps()}>
         <input {...getInputProps()} />
-        <Button iconLeft={HeartIcon}>Icon left</Button>
+        <Button iconLeft={HeartIcon}>Upload File</Button>
       </div>
     </div>
 
@@ -98,28 +121,39 @@ function Files() {
               <TableCell>Description</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Date</TableCell>
+              <TableCell>Action</TableCell>
             </tr>
           </TableHeader>
           <TableBody>
-            {data.map((user, i) => (
+            {allFiles.map((file, i) => (
               <TableRow key={i}>
                 <TableCell>
                   <div className="flex items-center text-sm">
-                    <Avatar className="hidden mr-3 md:block" src={user.avatar} alt="User image" />
+                    <Avatar className="hidden mr-3 md:block" src={""} alt="User image" />
                     <div>
-                      <p className="font-semibold">{user.name}</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">{user.job}</p>
+                      <p className="font-semibold">{file.fileName}</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">{"nice nice"}</p>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">$ {user.amount}</span>
+                  <span className="text-sm">$ {200}</span>
                 </TableCell>
                 <TableCell>
-                  <Badge type={user.status}>{user.status}</Badge>
+                  <Badge type={"danger"}>{file.fileType}</Badge>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">{new Date(user.date).toLocaleDateString()}</span>
+                  <span className="text-sm">{new Date(file.createdAt).toLocaleDateString()}</span>
+                </TableCell>
+                <TableCell>
+                  <div className="flex items-center space-x-4">
+                    <Button  onClick={()=>handleChatNavigation(file._id)} layout="link" size="icon" aria-label="Edit">
+                      <ChatIcon className="w-5 h-5" aria-hidden="true" />
+                    </Button>
+                    <Button layout="link" size="icon" aria-label="Delete">
+                      <TrashIcon className="w-5 h-5" aria-hidden="true" />
+                    </Button>
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
