@@ -49,7 +49,7 @@ function Layout() {
                   />
                 ))}
 
-
+{/* <Route path="/app/chat" element={<Navigate to="/chat" />} /> */}
     <Route path="/app/*" element={<Navigate to="/app/mydocument" />} />
          
               <Route path="/*" element={<Page404 />} />

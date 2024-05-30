@@ -19,6 +19,7 @@ import Login from './pages/Login'
 import CreateAccount from './pages/CreateAccount'
  //const ForgotPassword = lazy(() => import('./pages/ForgotPassword'))
 import ForgotPassword from './pages/ForgotPassword'
+import Home from './pages1/Home'
 // const Forms = lazy(() => import('./pages/Forms'))
 // const Cards = lazy(() => import('./pages/Cards'))
 
@@ -42,6 +43,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/chat" element={<Home />} />
     
         <Route path="/app/*" element={<Layout />} />
         <Route path="/" element={<Navigate to="/login" replace />} />
