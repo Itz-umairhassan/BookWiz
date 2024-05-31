@@ -78,6 +78,7 @@ export const userFolderAuth = async (req,res , next)=>{
         if(!folderId){
             folderId = req.params.folderId;
         }
+    
         const userFolders = (await User.findById(new mongodb.ObjectId(userId)))["folders"];
         let userHasFolder = false;
         console.log(`user uid is ${userId}`);

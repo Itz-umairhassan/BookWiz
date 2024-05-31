@@ -41,7 +41,7 @@ export default function App() {
       <AccessibleNavigationAnnouncer />
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/create-account" element={<CreateAccount />} />
+        <Route path="/signup" element={<CreateAccount />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/chat" element={<Home />} />
     
