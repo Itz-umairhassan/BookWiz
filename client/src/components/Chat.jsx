@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react'
 import { Button, Input, Badge, Card, CardBody } from '@windmill/react-ui'
 import { ChatIcon, BellIcon } from '../icons'
 import PageTitle from '../Typography/PageTitle'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
 function Chat() {
   const [message, setMessage] = useState('')
@@ -9,75 +11,86 @@ function Chat() {
   const [loading, setLoading] = useState(false)
   const messagesEndRef = useRef(null)
 
+  const {fileId} = useParams();
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
   useEffect(scrollToBottom, [chat]);
 
-  function sendMessage() {
+  async function sendMessage() {
     if (message.trim() !== '') {
-      setChat([...chat, { message, sender: 'user' }])
-      setMessage('')
-
+      const newMessage = { message, sender: 'user' };
+      setChat([...chat, newMessage, { sender: 'server', loading: true }]);
+      setMessage('');
+  
       // Send the message to the server
       try {
-        const response = {
-          "data": {
-            "message": "Hello, how can I help you today? "
-          }
+        const payload = {
+            "documentId" : fileId,
+            "query" : message
         }
+  
+        const response = await axios.post("/api/file/query",payload,{
+            withCredentials: true
+        })
 
-        // Add the server's response to the chat
+        console.log(response);
+        const reply = response.data.payload[0]["model response"].output_text;
+  
+        // Update the loading state of the server's message and add the server's response to the chat
         if (response.data && response.data.message) {
-          setLoading(false);
-          setChat(prevChat => [...prevChat, { message: response.data.message, sender: 'server' }])
+          setChat(prevChat => {
+            const updatedChat = [...prevChat];
+            updatedChat[updatedChat.length - 1] = { message: reply, sender: 'server' };  // Update the server's message
+            return updatedChat;
+          });
         }
       } catch (error) {
+        console.log(error);
         console.error('Failed to send message:', error)
-        setLoading(false);
+        setChat(prevChat => {
+          const updatedChat = [...prevChat];
+          updatedChat.pop();  // Remove the loading message
+          return updatedChat;
+        });
       }
     }
   }
 
   return (
     <div className="p-6 flex flex-col h-full">
-      <PageTitle>Chat</PageTitle>
-      <div className="flex flex-col space-y-4 p-3 bg-white dark:bg-gray-800 rounded shadow overflow-y-auto custom-scrollbar flex-grow" style={{ maxHeight: '70vh' }}>
-        {chat.map((msg, index) => (
-          <div key={index} className={`flex items-start ${msg.sender === 'user' ? 'justify-end' : ''}`}>
-            <Card colored className={msg.sender === 'user' ? "bg-gray-700" : "bg-gray-900"}>
-              <CardBody className="flex-shrink min-w-0">
-                {loading ? (
-                  <div className="flex items-center justify-center space-x-2">
-                    <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
-                    <span>Loading...</span>
-                  </div>
-                ) : (
-                  <>
-                    <div className="bg-gray-800 p-4 rounded-md shadow-md max-w-lg ">
-                      <p className="text-white overflow-auto whitespace-normal " style={{ fontSize: '15px', maxHeight: 'auto' }}>
-                        {msg.message}
-                      </p>
-                    </div>
-
-
-                    <div className="flex justify-end mt-2">
-                      <Button layout="link" size="icon" aria-label="Edit">
-                        <ChatIcon className="w-5 h-5" />
-                      </Button>
-                      <Button layout="link" size="icon" aria-label="Edit">
-                        <ChatIcon className="w-5 h-5" />
-                      </Button>
-                    </div>
-                  </>
-                )}
-              </CardBody>
-            </Card>
+  <PageTitle>Chat</PageTitle>
+  <div className="flex flex-col space-y-4 p-3 bg-white dark:bg-gray-800 rounded shadow overflow-y-auto custom-scrollbar flex-grow" style={{ maxHeight: '70vh' }}>
+  {chat.map((msg, index) => (
+  <div key={index} className={`flex items-start ${msg.sender === 'user' ? 'justify-end' : ''}`}>
+    <Card colored className={msg.sender === 'user' ? "bg-gray-700" : "bg-gray-900"}>
+      <CardBody className="flex-shrink min-w-0">
+        {msg.loading ? (
+          <div className="flex items-center justify-center space-x-2">
+            <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
+            <span>Loading...</span>
           </div>
-        ))}
-        <div ref={messagesEndRef} />
-      </div>
+        ) : (
+          <>
+            <p className="text-white overflow-auto whitespace-normal" style={{ fontSize: '15px' }}>{msg.message}</p>
+            <div className="flex justify-end mt-2">
+              <Button layout="link" size="icon" aria-label="Edit">
+                <ChatIcon className="w-5 h-5" />
+              </Button>
+              <Button layout="link" size="icon" aria-label="Edit">
+                <ChatIcon className="w-5 h-5" />
+              </Button>
+        </div>
+      </>
+    )}
+  </CardBody>
+</Card>
+</div>
+))}
+<div ref={messagesEndRef} />
+</div>
       <div className="flex mt-4 sticky bottom-0 bg-white dark:bg-gray-800 p-6">
         <Input
           className="mr-2"
