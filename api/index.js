@@ -7,6 +7,7 @@ import authRoutes from './routes/authRoutes.js'
 import testRoutes from './routes/testRoutes.js'
 import fileRoutes from "./routes/fileRoutes.js"
 import folderRoutes from "./routes/folderRoutes.js"
+import notesRoutes from "./routes/notesRoutes.js";
 
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
@@ -32,6 +33,7 @@ app.use('/api/auth',authRoutes);
 app.use("/api/test" , testRoutes);
 app.use("/api/file" ,fileRoutes);
 app.use("/api/folder" , folderRoutes);
+app.use('/api/notes',notesRoutes);
 
 app.listen(PORT_NUMBER , ()=>{
     console.log(`App is listening at PORT = ${PORT_NUMBER}`)

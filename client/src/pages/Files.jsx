@@ -11,6 +11,7 @@ import RoundIcon from '../components/RoundIcon'
 import response from '../utils/demo/tableData'
 import axios from 'axios';
 import { HeartIcon, EditIcon, TrashIcon,fileIcon } from '../icons';
+import { FaSpinner, FaCircleNotch } from 'react-icons/fa';
 
 
 import {
@@ -124,7 +125,12 @@ function Files() {
         <div {...getRootProps()}>
           <input {...getInputProps()} />
           <i class="fa-solid fa-upload">Files</i>
+          {isUploading ? <Button className='mt-3 mb-3' iconLeft={FaCircleNotch}>Uploading file...</Button> : 
           <Button  className=' mt-3 mb-3' iconLeft={fileIcon}>Upload File</Button>
+          }
+          
+          
+          
         </div>
       </div>
 
