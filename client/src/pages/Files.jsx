@@ -35,6 +35,8 @@ function Files() {
   const [isUploading, setIsUploading] = useState(false);
   const [allFiles, setAllFiles] = useState([]);
 
+  
+
   // get folderId from url
   const { folderId } = useParams();
   const navigate = useNavigate();
@@ -53,7 +55,7 @@ function Files() {
       const res = await axios.get(`/api/folder/getFiles/${folderId}`, {
         withCredentials: true
       });
-
+      
       console.log(res);
       setAllFiles(res.data.payload);
     } catch (error) {

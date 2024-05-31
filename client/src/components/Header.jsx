@@ -29,6 +29,8 @@ function Header() {
     setIsProfileMenuOpen(!isProfileMenuOpen);
   }
 
+  const [search,setSearch]=useState('');
+
   const logout = () => {
     navigate('/login');
   };

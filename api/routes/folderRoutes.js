@@ -3,8 +3,10 @@ import {folderExists, userExists, userFolderAuth, validateUser} from "../middlew
 import {folderCreation , getAllFiles , removeFolder} from "../controllers/folderController.js";
 
 const router = express.Router();
+
 router.use(validateUser);
 router.use(userExists);
+
 
 router.post('/create' , folderCreation);
 router.get('/getFiles/:folderId' ,folderExists, userFolderAuth, getAllFiles);

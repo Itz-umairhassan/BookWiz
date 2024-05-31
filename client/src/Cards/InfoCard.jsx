@@ -3,6 +3,7 @@ import { Card, CardBody } from '@windmill/react-ui'
 import { Navigate, redirect , useNavigate} from 'react-router-dom'
 function InfoCard({ _folder , children : icon}) {
   const navigate = useNavigate();
+  
   function handleClick(folderId){
     navigate(`/app/files/${folderId}` , {replace:true});
   }

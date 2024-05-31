@@ -43,7 +43,7 @@ function Forms() {
   return (
     <div className="p-6 flex flex-col h-full">
       <PageTitle>Notes module</PageTitle>
-      <div className="flex flex-col space-y-4 p-3 bg-white dark:bg-gray-800 rounded shadow overflow-y-auto custom-scrollbar flex-grow" style={{ maxHeight: '70vh' }}>
+      <div  style={{background:'#4a0a66'}} className="flex flex-col space-y-4 p-3   rounded shadow overflow-y-auto custom-scrollbar flex-grow" style={{ maxHeight: '70vh' }}>
         {chat.map((msg, index) => (
           <div key={index} className={`flex items-start ${msg.sender === 'user' ? 'justify-end' : ''}`}>
             <Card colored className={msg.sender === 'user' ? "bg-gray-700" : "bg-gray-900"}>
@@ -63,7 +63,7 @@ function Forms() {
 
 
                     <div className="flex justify-end mt-2">
-                      <Button layout="link" size="icon" aria-label="Edit">
+                      <Button  layout="link" size="icon" aria-label="Edit">
                         <EditIcon className="w-5 h-5" />
                       </Button>
                       <Button layout="link" size="icon" aria-label="Edit">

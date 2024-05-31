@@ -22,6 +22,7 @@ router.get('/folders',validateUser,userExists,async (req,res)=>{
         }
 
         res.status(200).json(successMessage("folders fetched",[folders]));
+        
     }catch(error){
         console.log(`error: ${error}`);
         res.status(500).json(serverError());
