@@ -65,4 +65,39 @@ router.post('/upload' ,upload.single("file"),userExists,folderExists,userFolderA
     }
 });
 
+router.post('/query' , userExists, async (req , res)=>{
+    try{
+        const documentId = req.body.documentId;
+        const query = req.body.query;
+        const userId = req.userId;
+        console.log(documentId)
+        console.log(query)
+        // const response = await fetch("http://127.0.0.1:8000/ask_query", {
+        //     method: 'POST',
+        //     headers: {
+        //       'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //       "document_id": documentId,
+        //       "question": query  // Changed "query" to "question"
+        //     })
+        // });
+
+        // const data = await response.json();
+        const data = {
+            'model response': {
+              output_text: 'Building an ML-enabled system is a multifaceted undertaking that combines data engineering, ML engineering, and application engineering tasks. Data engineering involves ingesting, integrating, curating, and refining data to facilitate a broad spectrum of operational tasks, data analytics tasks, and ML tasks. ML models are built and deployed in production using curated data that is usually created by the data engineering team. The models do not operate in silos; they are components of, and support, a large range of application systems, such as business intelligence systems, line of business applications, process control systems, and embedded systems. Integrating an ML model into an application is a critical task that involves making sure first that the deployed model is used effectively by the applications, and then monitoring model performance. In addition to this, you should also collect and monitor relevant business KPIs (for example, click-through rate, revenue uplift, and user experience). This information helps you understand the impact of the ML model on the business and adapt accordingly.'
+            },
+            'db time': 0.47408103942871094,
+            'model time': 6.5733642578125
+          }
+          
+
+        res.status(200).json(successMessage("answered",[data]));
+    }catch(error){
+        console.log(`error = ${error}`);
+        res.status(500).json(serverError());
+    }
+});
+
 export default router
