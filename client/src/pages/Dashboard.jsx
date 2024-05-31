@@ -9,7 +9,7 @@ import PageTitle from '../Typography/PageTitle'
 import { ChatIcon, CartIcon, MoneyIcon, PeopleIcon } from '../icons'
 import RoundIcon from '../components/RoundIcon'
 import response from '../utils/demo/tableData'
-import { Button } from '@windmill/react-ui'
+import { Button} from '@windmill/react-ui'
 import Modals from './Modals'
 
 import {
@@ -28,7 +28,7 @@ import axios from 'axios'
 import { model } from 'mongoose'
 import { render } from 'react-dom'
 import CreateFolderModal from '../Modals/CreateFolderModal'
-
+import { Alert } from '@windmill/react-ui'
 
 function Dashboard() {
   const [page, setPage] = useState(1)
@@ -85,13 +85,14 @@ function Dashboard() {
   return (
     <>
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <PageTitle>MyDocuments</PageTitle>
+      <PageTitle>My Folders</PageTitle>
       <Button onClick={openModal} size="large">
         Create Folder
       </Button>
       <CreateFolderModal isModelOpen={isModalOpen} closeModal={closeModal}/>
-
+    
     </div>
+    
       {/* <!-- Cards --> */}
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
         {spin ? 'Loading....' : (
@@ -109,19 +110,6 @@ function Dashboard() {
           })
         )}
       </div>
-
-      {/* <PageTitle>Charts</PageTitle>
-      <div className="grid gap-6 mb-8 md:grid-cols-2">
-        <ChartCard title="Revenue">
-          <Doughnut {...doughnutOptions} />
-          <ChartLegend legends={doughnutLegends} />
-        </ChartCard>
-
-        <ChartCard title="Traffic">
-          <Line {...lineOptions} />
-          <ChartLegend legends={lineLegends} />
-        </ChartCard>
-      </div> */}
     </>
   )
 }
