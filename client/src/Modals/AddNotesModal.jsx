@@ -15,8 +15,8 @@ function AddNotesModal({ _Note,NoteUpdateCallBack, isModelOpen,closeModal }) {
     const handleNotesUpdation = async ()=>{
         try{
         console.log("notes updated");
-        setFormData({ ...formData, "noteId": _Note._id });
-
+        setFormData({ ...formData, ["noteId"]: _Note._id });
+        
         const resp = await axios.post("/api/notes/update",formData,{
             withCredentials:true
         });
