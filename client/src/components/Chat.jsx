@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Button, Input, Badge, Card, CardBody } from '@windmill/react-ui'
-import { ChatIcon, BellIcon }  from '../icons'
+import { ChatIcon, BellIcon } from '../icons'
 import PageTitle from '../Typography/PageTitle'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
@@ -92,7 +92,7 @@ function Chat() {
 <div ref={messagesEndRef} />
 </div>
       <div className="flex mt-4 sticky bottom-0 bg-white dark:bg-gray-800 p-6">
-        <Input 
+        <Input
           className="mr-2"
           placeholder="Type your message here..."
           value={message}
