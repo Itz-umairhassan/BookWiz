@@ -5,11 +5,15 @@ import {errorMessage, successMessage ,serverError} from "../helpers/helperFuncs.
 import mongodb from "mongodb";
 
 export const folderCreation =  async (req , res) =>{
-    const {userId , folderName , status} = req.body;
+    const {folderName , status} = req.body;
 
     try{
+        const userId = req.userId;
+        console.log('user id is ++ ' + userId);
+
         const userObjId = new mongodb.ObjectId(userId);
         const user = await User.findById(userObjId);
+  
 
         const folder = new Folder({
             folderName:folderName,
@@ -62,7 +66,9 @@ export const getAllFiles = async (req , res)=>{
 export const removeFolder = async (req  ,res)=>{
     try{
 
-        const {userId , folderId} = req.body;
+        const {folderId} = req.body;
+        const userId = req.userId;
+
         const user = await User.findById(new mongodb.ObjectId(userId));
         const folder = await Folder.findById(new mongodb.ObjectId(folderId));
         

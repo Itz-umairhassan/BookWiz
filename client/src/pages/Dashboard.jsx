@@ -70,7 +70,7 @@ function Dashboard() {
       console.log(dT);
       setSpin(false);
     }catch(error){
-      console.error(error.response.data.message);
+      console.error(error);
       setSpin(false);
     }
   }
@@ -93,11 +93,12 @@ function Dashboard() {
       <CreateFolderModal isModelOpen={isModalOpen} closeModal={closeModal}/>
     
     </div>
-    
+
       {/* <!-- Cards --> */}
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
         {spin ? 'Loading....' : (
-          folders.map((folder) => {
+          folders.length > 0 ?
+          (folders.map((folder) => {
             return (
               <InfoCard _folder={folder}>
                 <RoundIcon
@@ -108,7 +109,12 @@ function Dashboard() {
                 />
               </InfoCard>
             )
-          })
+          }))
+          : (
+            <p className="text-gray-700 dark:text-gray-300">
+              No Folders Found
+            </p>
+          )
         )}
       </div>
     </>
