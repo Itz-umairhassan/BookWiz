@@ -94,19 +94,18 @@ function Files() {
     acceptedFiles.forEach((file) => {
       setIsUploading(true);
 
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append("folderId", folderId);
-      for (let pair of formData) {
-        console.log(pair[0], pair[1])
-      }
-      axios.post('/api/file/upload', formData, {
-        'Content-Type': 'multipart/form-data',
-        withCredentials: true
-      }).then(response => {
+        const formData = new FormData();
+        formData.append('file' , file);
+        formData.append("folderId" , folderId);
+       
+        axios.post('/api/file/upload', formData, {
+          'Content-Type': 'multipart/form-data',
+          withCredentials: true
+        }).then(response => {
 
-        console.log(response);
-        setIsUploading(false);
+          console.log(response);
+          setAllFiles(previousFiles => [...previousFiles, response.data.payload[0]]);
+          setIsUploading(false);
 
       }).catch(error => {
 
