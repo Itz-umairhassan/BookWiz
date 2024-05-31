@@ -1,6 +1,6 @@
 import User from "../models/userModel.js";
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken'
+import jwt from  'jsonwebtoken'
 import { errorMessage, serverError, successMessage } from "../helpers/helperFuncs.js";
 
 export const signup = async (req, res) => {
@@ -72,3 +72,4 @@ export const signin=async(req,res)=>{
         res.send(500).json(serverError());
     }
 }
+

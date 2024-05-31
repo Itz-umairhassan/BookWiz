@@ -20,8 +20,9 @@ router.get('/folders',validateUser,userExists,async (req,res)=>{
                 folders.push(_folder);
             }
         }
+        console.log(folders)
 
-        res.status(200).json(successMessage("folders fetched",[folders]));
+        res.status(200).json(successMessage("folders fetched",folders));
         
     }catch(error){
         console.log(`error: ${error}`);
@@ -29,4 +30,4 @@ router.get('/folders',validateUser,userExists,async (req,res)=>{
     }
 });
 
-export default router;
+export default router

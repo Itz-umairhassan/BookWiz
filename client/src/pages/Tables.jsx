@@ -78,7 +78,7 @@ function Tables() {
             <tr>
               <TableCell>Client</TableCell>
               {/* <TableCell>Amount</TableCell> */}
-              <TableCell>Status</TableCell>
+              <TableCell>Statu</TableCell>
               <TableCell>Date</TableCell>
             </tr>
           </TableHeader>

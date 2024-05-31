@@ -17,7 +17,7 @@ function Cards() {
 
       <SectionTitle>Big section cards</SectionTitle>
 
-      <Card className="mb-8 shadow-md">
+      <Card className="mb-8b bg-white shadow-md">
         <CardBody>
           <p className="text-sm text-gray-600 dark:text-gray-400">
             Large, full width sections goes here

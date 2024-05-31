@@ -65,6 +65,7 @@ function Dashboard() {
       });
 
       const dT = res.data.payload[0];
+      console.log(res)
       setFolders(dT);
       console.log(dT);
       setSpin(false);

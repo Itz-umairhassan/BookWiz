@@ -1,7 +1,6 @@
 import express from "express"
 import {folderExists, userExists, userFolderAuth, validateUser} from "../middleware/authMiddleWare.js"
 import {folderCreation , getAllFiles , removeFolder} from "../controllers/folderController.js";
-
 const router = express.Router();
 
 router.use(validateUser);
