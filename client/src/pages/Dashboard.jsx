@@ -96,11 +96,8 @@ function Dashboard() {
       setFilteredFolders(folders)
     }
   }, [searchTerm, folders])
-
   // Rest of your component
   // Replace allFolders with filteredFolders in your rendering code
-
-
   return (
     <>
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -109,13 +106,11 @@ function Dashboard() {
         Create Folder
       </Button>
       <CreateFolderModal isModelOpen={isModalOpen} closeModal={closeModal}/>
-    
     </div>
-
       {/* <!-- Cards --> */}
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
         {spin ? 'Loading....' : (
-          folders.length > 0 ?
+         folders && folders.length > 0 ?
           (filteredFolders.map((folder) => {
             return (
               <InfoCard _folder={folder}>

@@ -72,3 +72,23 @@ export const signin=async(req,res)=>{
         res.send(500).json(serverError());
     }
 }
+
+export const updateProfile=async(req,res)=>{
+    console.log("inside update profile");
+    if (req.body.userId === req.params.id) { // Fix the comparison here
+        if (req.body.password) {
+          const salt = await bcrypt.genSalt(10);
+          req.body.password = await bcrypt.hash(req.body.password, salt);
+        }
+        try {
+          const updatedUser = await User.findByIdAndUpdate(req.params.id, {
+            $set: req.body,
+          }, { new: true }); // Use { new: true } to return the updated user
+          res.status(200).json(updatedUser);
+        } catch (error) {
+          res.status(500).json(error);
+        }
+      } else {
+        res.status(401).json("You can update only your account");
+      }
+}
