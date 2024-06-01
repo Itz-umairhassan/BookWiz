@@ -33,15 +33,12 @@ function Files() {
   const [isUploading, setIsUploading] = useState(false);
   const [allFiles, setAllFiles] = useState([]);
 
-  const { searchTerm } = useContext(SearchContext)
+  const [searchTerm ] = useContext(SearchContext)
   const [filteredFiles, setFilteredFiles] = useState([])
   
 
-<<<<<<< HEAD
-=======
-  const { searchTerm } = useContext(SearchContext)
+  const [ searchTerm ] = useContext(SearchContext)
   const [filteredFiles, setFilteredFiles] = useState([])
->>>>>>> main
   
 
   // get folderId from url
@@ -229,5 +226,6 @@ function Files() {
     </>
   )
 }
+
 
 export default Files

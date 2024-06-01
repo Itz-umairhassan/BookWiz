@@ -39,4 +39,3 @@ return (
     <ul className="mt-6">{routeItems}</ul>
   </div>
 );
-}

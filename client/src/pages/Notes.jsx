@@ -18,10 +18,6 @@ function Notes() {
   console.log("term  "+searchTerm)
 
 
-<<<<<<< HEAD
-function Notes() {
-=======
->>>>>>> main
   const [isModalOpen, setIsModalOpen] = useState(false)
  
   const [page,setPage] = useState(2);
