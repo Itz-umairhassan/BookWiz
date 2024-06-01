@@ -20,6 +20,11 @@ function Header() {
 
   const { mode, toggleMode } = useContext(WindmillContext);
   const { toggleSidebar } = useContext(SidebarContext);
+
+  const [query,setquery]=useState("");
+
+  
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -33,6 +38,10 @@ function Header() {
   function handleProfileClick() {
     setIsProfileMenuOpen(!isProfileMenuOpen);
   }
+
+;
+
+  console.log("query",query)
 
   const logout = () => {
     navigate('/login');
@@ -75,7 +84,7 @@ function handleSearchChange(event) {
         <div className="flex justify-center flex-1 lg:mr-32">
           <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
             <div className="absolute inset-y-0 flex items-center pl-2">
-              <SearchIcon className="w-4 h-4" aria-hidden="true" />
+              <SearchIcon className="w-4 h-4 b" aria-hidden="true"  />
             </div>
             <Input
   className="pl-8 text-gray-700"

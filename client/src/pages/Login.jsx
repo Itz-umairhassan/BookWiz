@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
 import axios from 'axios';
@@ -12,6 +12,7 @@ import GithubIcon from '../icons/github.svg?react'
 
 import TwitterIcon from '../icons/twitter.svg?react'
 import { Label, Input, Button } from '@windmill/react-ui'
+import { Context } from '../context/Context.jsx';
 
 
 function Login() {
@@ -19,6 +20,9 @@ function Login() {
   const navigate=useNavigate();
   const [formData,setFormData]=useState();
   const [error,setErrorMessage]=useState(null);
+
+  const {user,dispatch,isFetching}= useContext(Context)
+   console.log(dispatch,Context)
   const handleChange=(e)=>{
     setFormData({...formData,[e.target.id]:e.target.value.trim()})
   }
@@ -35,7 +39,9 @@ function Login() {
       const res= await axios.post('/api/auth/signin',formData,{
         headers:{'Content-Type':'application/json'}
       });
-
+      console.log("user credential",res)
+       dispatch({type:"LOGIN_SUCCESS",payload:res.data});
+       console.log(user)
       console.log('res = ', res)
       if(res.status==200){
         navigate('/app/folders',{replace:true});
@@ -44,13 +50,12 @@ function Login() {
     } catch (error) {
       console.log(error);
       setErrorMessage(error.response.data["message"]);
+      
     }
-
-    
   };
 
 
-
+  console.log(user)
   return (
   
     <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">

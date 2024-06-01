@@ -69,6 +69,7 @@ function Dashboard() {
       });
 
       const dT = res.data.payload[0];
+      console.log(res)
       setFolders(dT);
       console.log(dT);
       setSpin(false);
@@ -96,8 +97,11 @@ function Dashboard() {
       setFilteredFolders(folders)
     }
   }, [searchTerm, folders])
+
   // Rest of your component
   // Replace allFolders with filteredFolders in your rendering code
+
+
   return (
     <>
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -106,11 +110,13 @@ function Dashboard() {
         Create Folder
       </Button>
       <CreateFolderModal isModelOpen={isModalOpen} closeModal={closeModal}/>
+    
     </div>
+
       {/* <!-- Cards --> */}
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
         {spin ? 'Loading....' : (
-         folders && folders.length > 0 ?
+          folders.length > 0 ?
           (filteredFolders.map((folder) => {
             return (
               <InfoCard _folder={folder}>

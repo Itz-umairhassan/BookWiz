@@ -12,7 +12,6 @@ function Page404() {
         <a className="text-purple-600 hover:underline dark:text-purple-300" href="../index.html">
           go back
         </a>
-        .
       </p>
     </div>
   )

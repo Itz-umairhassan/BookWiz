@@ -43,20 +43,19 @@ function Notes() {
     const newNotes = [...allNotes];
     newNotes[index] = updatedNote;
     console.log("handled gracefuly");
-    // Update the state
     setAllNotes(newNotes);
   
   };
-
+  console.log('res',allNotes)
   async function fetchNotes(){
     try{
       const res = await axios.post("/api/notes/fecthAll",{withCredentials:true});
-      console.log(res);
       setAllNotes(res.data.payload);
     }catch(error){
       console.log(error);
     }
   }
+  console.log(allNotes)
 
     // Use searchTerm to filter the notes before rendering them
     // const filteredNotes = allNotes.filter(note => note.title.includes(searchTerm))
@@ -81,7 +80,7 @@ function Notes() {
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <PageTitle>My Notes</PageTitle>
     </div>
-
+     
     <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
       { allNotes.length > 0 ? filteredNotes.map((note) => (
           <NoteCard _Note={note} NoteUpdateCallBack={handleNoteUpdate}>
