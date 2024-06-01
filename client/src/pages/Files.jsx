@@ -5,7 +5,7 @@ import { SearchContext } from '../context/SearchContext'
 
 import response from '../utils/demo/tableData'
 import axios from 'axios';
-import { HeartIcon, EditIcon, TrashIcon,fileIcon } from '../icons';
+import { HeartIcon, EditIcon, TrashIcon,fileIcon, ModalsIcon } from '../icons';
 import { FaSpinner, FaCircleNotch } from 'react-icons/fa';
 //import { Dropdown, DropdownItem } from '@windmill/react-ui'
 
@@ -201,6 +201,7 @@ function Files() {
             
                   
                   <Dropdown fileId={file._id} handleChatNavigation={handleChatNavigation} onDelete={onDelete} />
+                  
                 </TableCell>
               </TableRow>
             ))}

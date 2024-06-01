@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { HeartIcon, EditIcon } from '../icons'
+import { HeartIcon, EditIcon, fileIcon, MenuIcon, CartIcon, PagesIcon, FormsIcon } from '../icons'
 
 import PageTitle from '../Typography/PageTitle'
 import SectionTitle from '../Typography/SectionTitle'
@@ -121,10 +121,11 @@ function Buttons() {
       <SectionTitle>Icons</SectionTitle>
       <div className="flex flex-col flex-wrap mb-8 space-y-4 md:flex-row md:items-end md:space-x-4">
         <div>
-          <Button iconRight={HeartIcon}>
+          <Button iconRight={CartIcon}>
             <span>Icon right</span>
           </Button>
         </div>
+        
 
         <div>
           <Button iconLeft={HeartIcon}>
@@ -133,15 +134,15 @@ function Buttons() {
         </div>
 
         <div>
-          <Button icon={HeartIcon} aria-label="Like" />
+          <Button icon={fileIcon} aria-label="Like" />
         </div>
 
         <div>
-          <Button icon={EditIcon} aria-label="Edit" />
+          <Button icon={PagesIcon} aria-label="Edit" />
         </div>
 
         <div>
-          <Button icon={HeartIcon} layout="link" aria-label="Like" />
+          <Button icon={FormsIcon} layout="link" aria-label="Like" />
         </div>
         <div>
           <Button icon={HeartIcon} layout="outline" aria-label="Like" />

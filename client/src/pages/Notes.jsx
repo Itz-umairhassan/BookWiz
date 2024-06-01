@@ -1,10 +1,11 @@
 import React, { useState,useContext, useRef, useEffect } from 'react'
 import { Button, Input, Badge, Card, CardBody } from '@windmill/react-ui'
-import { ChatIcon, BellIcon, EditIcon, TrashIcon } from '../icons'
+import { ChatIcon, BellIcon, EditIcon, TrashIcon, ModalsIcon, FormsIcon } from '../icons'
 import PageTitle from '../Typography/PageTitle'
 import NoteCard from '../Cards/NoteCard'
 import RoundIcon from '../components/RoundIcon'
 import CreateFolderModal from '../Modals/CreateFolderModal'
+import UpdateNotesModal from '../Modals/UpdateNotesModal'
 import AddNotesModal from '../Modals/AddNotesModal'
 import axios from 'axios'
 import { SearchContext } from '../context/SearchContext'
@@ -48,6 +49,11 @@ function Notes() {
   
   };
 
+  const handleAddNote = (newNote) => {
+    // setAllNotes(prevNotes => [...prevNotes, newNote])
+    fetchNotes();
+  }
+
   async function fetchNotes(){
     try{
       const res = await axios.post("/api/notes/fecthAll",{withCredentials:true});
@@ -58,6 +64,16 @@ function Notes() {
     }
   }
 
+  const handleDeleteNote = async (noteId) => {
+    try {
+      const res = await axios.delete(`/api/notes/${noteId}`, { withCredentials: true });
+      console.log(res);
+      // After deleting the note, fetch the updated list of notes
+      fetchNotes();
+    } catch (error) {
+      console.log(error);
+    }
+  }
     // Use searchTerm to filter the notes before rendering them
     // const filteredNotes = allNotes.filter(note => note.title.includes(searchTerm))
 
@@ -78,15 +94,19 @@ function Notes() {
 
   return (
     <>
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <PageTitle>My Notes</PageTitle>
+      <Button onClick={openModal} size="large">
+        Create Note
+      </Button>
+      <AddNotesModal isModelOpen={isModalOpen} closeModal={closeModal} NoteAddCallBack={handleAddNote}/>
+    
     </div>
-
     <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
       { allNotes.length > 0 ? filteredNotes.map((note) => (
-          <NoteCard _Note={note} NoteUpdateCallBack={handleNoteUpdate}>
+          <NoteCard _Note={note} NoteUpdateCallBack={handleNoteUpdate}  NoteDeleteCallBack={handleDeleteNote} >
                 <RoundIcon
-                  icon={ChatIcon}
+                  icon={FormsIcon}
                   iconColorClass="text-teal-500 dark:text-teal-100"
                   bgColorClass="bg-teal-100 dark:bg-teal-500"
                   className="mr-4"
