@@ -66,6 +66,42 @@ router.post('/upload' ,upload.single("file"),userExists,folderExists,userFolderA
     }
 });
 
+router.delete('/delete/:fileId', userExists, async (req, res) => {
+    try {
+        const fileId = req.params.fileId;
+        const userId = req.userId;
+        console.log("user"+userId)
+console.log(`fileId = ${fileId}`)
+        // Check if the file exists
+        const file = await File.findById(fileId);
+        if (!file) {
+            return res.status(404).json(errorMessage("File not found"));
+        }
+
+        // Check if the user has permission to delete the file
+        const folder = await Folder.findById(file.folderId);
+        console.log("owner "+folder.owner)
+        if (!folder || !folder.owner || folder.owner.toString() !== userId) {
+            return res.status(403).json(errorMessage("Unauthorized"));
+        }
+
+        // Delete the file from the database
+        await File.findByIdAndDelete(fileId);
+
+        // Remove the file from the folder's file list
+        await Folder.findByIdAndUpdate(folder._id, {
+            $pull: {
+                files: fileId
+            }
+        });
+
+        res.status(200).json(successMessage("File deleted successfully"));
+    } catch (error) {
+        console.log(`error: ${error}`);     
+        res.status(500).json(serverError());
+    }
+});
+
 router.post('/query' , userExists, async (req , res)=>{
     try{
         const documentId = req.body.documentId;

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-
+import React, { useState,useContext, useEffect } from 'react'
+import { SearchContext } from '../context/SearchContext'
 import CTA from '../components/CTA'
 import InfoCard from '../Cards/InfoCard'
 // import ChartCard from '../components/Chart/ChartCard'
@@ -36,6 +36,10 @@ function Dashboard() {
   const [folders , setFolders] = useState([]);
   const [spin , setSpin] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const { searchTerm } = useContext(SearchContext)
+  const [filteredFolders, setFilteredFolders] = useState([])
+
 
   function openModal() {
     setIsModalOpen(true)
@@ -82,6 +86,21 @@ function Dashboard() {
     fetchFolders();
   }, [page])
 
+  useEffect(() => {
+    if (searchTerm) {
+      const newFilteredFolders = folders.filter(folder =>
+        folder.folderName && folder.folderName.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+      setFilteredFolders(newFilteredFolders)
+    } else {
+      setFilteredFolders(folders)
+    }
+  }, [searchTerm, folders])
+
+  // Rest of your component
+  // Replace allFolders with filteredFolders in your rendering code
+
+
   return (
     <>
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -97,7 +116,7 @@ function Dashboard() {
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
         {spin ? 'Loading....' : (
           folders.length > 0 ?
-          (folders.map((folder) => {
+          (filteredFolders.map((folder) => {
             return (
               <InfoCard _folder={folder}>
                 <RoundIcon

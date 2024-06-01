@@ -1,18 +1,15 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useContext,useEffect, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone';
-import CTA from '../components/CTA'
-import InfoCard from '../Cards/InfoCard'
-// import ChartCard from '../components/Chart/ChartCard'
-// import { Doughnut, Line } from 'react-chartjs-2'
-// import ChartLegend from '../components/Chart/ChartLegend'
-import PageTitle from '../Typography/PageTitle'
-import { ChatIcon, CartIcon, MoneyIcon, PeopleIcon } from '../icons'
-import RoundIcon from '../components/RoundIcon'
+
+import { SearchContext } from '../context/SearchContext'
+
 import response from '../utils/demo/tableData'
 import axios from 'axios';
 import { HeartIcon, EditIcon, TrashIcon,fileIcon } from '../icons';
 import { FaSpinner, FaCircleNotch } from 'react-icons/fa';
+//import { Dropdown, DropdownItem } from '@windmill/react-ui'
 
+import Dropdown from '../components/DropDown';
 
 import {
   TableBody,
@@ -35,6 +32,10 @@ function Files() {
   const [data, setData] = useState([])
   const [isUploading, setIsUploading] = useState(false);
   const [allFiles, setAllFiles] = useState([]);
+
+  const { searchTerm } = useContext(SearchContext)
+  const [filteredFiles, setFilteredFiles] = useState([])
+  
 
   // get folderId from url
   const { folderId } = useParams();
@@ -75,6 +76,21 @@ function Files() {
     handleFileLoading();
 
   }, [page]);
+
+  useEffect(() => {
+    if (searchTerm) {
+      const newFilteredFiles = allFiles.filter(file =>
+        file.fileName && file.fileName.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+      setFilteredFiles(newFilteredFiles)
+    } else {
+      setFilteredFiles(allFiles)
+    }
+  }, [searchTerm, allFiles])
+
+  // Rest of your component
+  // Replace allFiles with filteredFiles in your rendering code
+
 
 
 
@@ -118,13 +134,27 @@ function Files() {
   }, []);
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
+  const onDelete = async (fileId) => {
+    try {
+      const res = await axios.delete(`/api/file/delete/${fileId}`, {
+        withCredentials: true
+      });
+
+      console.log(res);
+      setAllFiles(allFiles.filter(file => file._id !== fileId));
+    } catch (error) {
+      console.log(error);
+    }
+  
+  }
+  
   return (
     <>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <i class="fa-solid fa-upload"></i>
         <div {...getRootProps()}>
           <input {...getInputProps()} />
-          <i class="fa-solid fa-upload">Files</i>
+          {/* <i class="fa-solid fa-upload">Files</i> */}
           {isUploading ? <Button className='mt-3 mb-3' iconLeft={FaCircleNotch}>Uploading file...</Button> : 
           <Button  className=' mt-3 mb-3' iconLeft={fileIcon}>Upload File</Button>
           }
@@ -139,14 +169,14 @@ function Files() {
           <TableHeader>
             <tr>
               <TableCell>Title</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell>Status</TableCell>
+              <TableCell>type</TableCell>
+              {/* <TableCell>S</TableCell> */}
               <TableCell>Date</TableCell>
               <TableCell>Action</TableCell>
             </tr>
           </TableHeader>
           <TableBody>
-            {allFiles.map((file, i) => (
+            {filteredFiles.map((file, i) => (
               <TableRow key={i}>
                 <TableCell>
                   <div className="flex items-center text-sm">
@@ -159,26 +189,18 @@ function Files() {
                     </div>
                   </div>
                 </TableCell>
-                <TableCell>
-                  <span className="text-sm">$ {200}</span>
-                </TableCell>
-                <TableCell>
+              
                   <TableCell>
                   {renderFileTypeBadge(file.fileType)}
                   </TableCell>
-                </TableCell>
+                {/* </TableCell> */}
                 <TableCell>
                   <span className="text-sm">{new Date(file.createdAt).toLocaleDateString()}</span>
                 </TableCell>
                 <TableCell>
-                  <div className="flex items-center space-x-4">
-                    <Button onClick={() => handleChatNavigation(file._id)} layout="link" size="icon" aria-label="Edit">
-                      <ChatIcon className="w-5 h-5" aria-hidden="true" />
-                    </Button>
-                    <Button layout="link" size="icon" aria-label="Delete">
-                      <TrashIcon className="w-5 h-5" aria-hidden="true" />
-                    </Button>
-                  </div>
+            
+                  
+                  <Dropdown fileId={file._id} handleChatNavigation={handleChatNavigation} onDelete={onDelete} />
                 </TableCell>
               </TableRow>
             ))}
@@ -193,19 +215,10 @@ function Files() {
           />
         </TableFooter>
       </TableContainer>
+      <div>
+ 
+      </div>
 
-      {/* <PageTitle>Charts</PageTitle>
-      <div className="grid gap-6 mb-8 md:grid-cols-2">
-        <ChartCard title="Revenue">
-          <Doughnut {...doughnutOptions} />
-          <ChartLegend legends={doughnutLegends} />
-        </ChartCard>
-
-        <ChartCard title="Traffic">
-          <Line {...lineOptions} />
-          <ChartLegend legends={lineLegends} />
-        </ChartCard>
-      </div> */}
     </>
   )
 }

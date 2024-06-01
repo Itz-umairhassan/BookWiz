@@ -3,7 +3,7 @@ import { lazy } from 'react'
 // use lazy for better code splitting, a.k.a. load faster
 // const  MyDocuments= lazy(() => import('../pages/Dashboard'))
 import MyDocuments from '../pages/Dashboard'
-import Notes from '../pages/Forms'
+import Notes from '../pages/Notes'
 import Profile from '../pages/Buttons'
 // const Charts = lazy(() => import('../pages/Charts'))
 import Trash from '../pages/Tables'
@@ -26,7 +26,7 @@ import Chat from '../components/Chat'
  */
 const routes = [
   {
-    path: '/mydocuments', // the url
+    path: '/folders', // the url
     component: MyDocuments, // view rendered
   },
   {
@@ -46,7 +46,7 @@ const routes = [
     component: Trash,
    },
   {
-    path: '/files/:folderId',
+    path: 'folders/files/:folderId',
     component: Files,
   },
   {
