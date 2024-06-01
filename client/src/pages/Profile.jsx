@@ -1,49 +1,59 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ImageLight from '../assets/img/create-account-office.jpeg';
 import ImageDark from '../assets/img/create-account-office-dark.jpeg';
 import { GithubIcon, TwitterIcon } from '../icons';
 import { Input, Label, Button } from '@windmill/react-ui';
+import { Context } from '../context/Context';
 
 function Profile() {
+  const {user,dispatch}=useContext(Context);
   const [formData, setFormData] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [success,setSuccess]=useState(false);
+
+
+ console.log("error",errorMessage)
+
 
   const navigate = useNavigate();
-
+ 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
 
-  console.log(formData)
-
+  console.log(formData.username)
+ 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const updatedUser={
-      userId:
-      username,
-      email,
-      password,
+
+    if(!formData || !formData.username || !formData.email || !formData.password){
+      setErrorMessage("Please fill all the fields")
+      return;
     }
-    
-    if (!formData || !formData.email || !formData.password) {
-      return setErrorMessage("Please fill all the fields");
-    }
+    dispatch({ type: "UPDATE_START" });
     try {
       setLoading(true);
       setErrorMessage(null);
-
-      const res = await axios.put(`/api/auth/profile/`, formData, {
+      const updatedUser={
+        userId:user._id,
+        username:formData.username,
+        email:formData.email,
+        password:formData.password
+      } 
+      
+      const res = await axios.put(`/api/auth/profile/${updatedUser.userId}`, updatedUser, {
         headers: { 'Content-Type': 'application/json' },
       });
+      dispatch({ type: "UPDATE_SUCCESS", payload: res.data });
       console.log(res);
-      if (res.status === 200) {
-        navigate('/login');
-      }
+      setSuccess(true)
+      
     } catch (error) {
       setErrorMessage(error.response.data['message']);
+      dispatch({ type: "UPDATE_FAILURE" });
     } finally {
       setLoading(false);
     }
@@ -70,7 +80,7 @@ function Profile() {
                     name="email"
                     className="mt-1"
                     type="text"
-                    placeholder="johndoe123"
+                    placeholder={user.username}
                     onChange={handleChange}
                   />
                 </Label>
@@ -81,7 +91,7 @@ function Profile() {
                     name="email"
                     className="mt-1"
                     type="email"
-                    placeholder="john@doe.com"
+                    placeholder={user.email}
                     onChange={handleChange}
                   />
                 </Label>
@@ -96,6 +106,7 @@ function Profile() {
                     onChange={handleChange}
                   />
                 </Label>
+
                 <Label className="mt-6" check>
                   <Input type="checkbox" />
                   <span className="ml-2">
@@ -106,8 +117,20 @@ function Profile() {
                   {loading ? 'Creating account...' : 'Update'}
                 </Button>
               </form>
-              <hr className="my-8" />
+
+            {success && (
+              <div className='  ml-10 mt-4 items-center justify-center'>
+                <span 
+                
+              style={{  color: "#53ff1a",fontSize:'15px', textAlign: "center", marginTop: "10px" }}
+            >
+              Profile has been updated...
+            </span>
+                </div>
+            
+          )}
              
+              <hr className="my-8" />
             
             </div>
           </main>
