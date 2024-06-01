@@ -8,7 +8,7 @@
 
 const routes = [
   {
-    path: '/app/mydocuments', // the url
+    path: '/app/folders', // the url
     icon: 'HomeIcon', // the component being exported from icons/index.js
     name: 'My Documents', // name that appear in Sidebar
   },
@@ -40,7 +40,7 @@ const routes = [
   // {
   //   path: '/app/tables',
   //   icon: 'TablesIcon',
-  //   name: 'Tables',
+  //   name: 'Tables',?//////////////////////////
   // },
 //   {
 //     icon: 'PagesIcon',

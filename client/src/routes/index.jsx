@@ -26,7 +26,7 @@ import Chat from '../components/Chat'
  */
 const routes = [
   {
-    path: '/mydocuments', // the url
+    path: '/folders', // the url
     component: MyDocuments, // view rendered
   },
   {
@@ -46,7 +46,7 @@ const routes = [
     component: Trash,
    },
   {
-    path: '/files/:folderId',
+    path: 'folders/files/:folderId',
     component: Files,
   },
   {

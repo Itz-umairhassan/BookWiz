@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 export const Folders = ({folderObj,isExtended})=>{
 
     return (
-        <Link to={`/files/${folderObj._id}`} className="recent">
+        <Link to={`folders/files/${folderObj._id}`} className="recent">
         <div className="recent">
             <div className="recent-entry">
             <img src={assets.message_icon} alt="" />

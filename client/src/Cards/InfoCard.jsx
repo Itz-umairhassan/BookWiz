@@ -5,7 +5,7 @@ function InfoCard({ _folder , children : icon}) {
   const navigate = useNavigate();
   
   function handleClick(folderId){
-    navigate(`/app/files/${folderId}` , {replace:true});
+    navigate(`/app/folders/files/${folderId}` , {replace:true});
   }
 
   return (

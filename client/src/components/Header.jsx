@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { SidebarContext } from '../context/SidebarContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
+import { SearchContext } from '../context/SearchContext'
 import {
   SearchIcon,
   MoonIcon,
@@ -14,6 +15,9 @@ import {
 import { Avatar, Badge, Input, Dropdown, DropdownItem, WindmillContext } from '@windmill/react-ui';
 
 function Header() {
+
+  const { setSearchTerm } = useContext(SearchContext)
+
   const { mode, toggleMode } = useContext(WindmillContext);
   const { toggleSidebar } = useContext(SidebarContext);
 
@@ -22,6 +26,7 @@ function Header() {
   
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [isNotificationsMenuOpen, setIsNotificationsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -42,6 +47,28 @@ function Header() {
     navigate('/login');
   };
 
+
+//search functions
+const searchInFolders = (query) => {
+  // Your search in folders logic here
+};
+
+const searchInFiles = (query) => {
+  // Your search in files logic here
+};
+
+const searchInNotes = (query) => {
+  // Your search in notes logic here
+};
+
+function handleSearchChange(event) {
+  setSearchTerm(event.target.value)
+}
+
+
+
+
+
   return (
     <header className="z-40 py-4 bg-white shadow-bottom dark:bg-gray-800">
       <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
@@ -59,7 +86,7 @@ function Header() {
             <div className="absolute inset-y-0 flex items-center pl-2">
               <SearchIcon className="w-4 h-4 b" aria-hidden="true"  />
             </div>
-            <Input className="pl-8 text-gray-700" placeholder="Search for documents"  onChange={(e)=>setquery(e.target.value)} aria-label="Search" />
+            <Input className="pl-8 text-gray-700" placeholder="Search for documents" aria-label="Search" />
           </div>
         </div>
         <ul className="flex items-center flex-shrink-0 space-x-6">

@@ -6,12 +6,7 @@
 import React, { lazy } from 'react'
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import AccessibleNavigationAnnouncer from './components/AccessibleNavigationAnnouncer'
-//import Home from './pages/Home'
-//import About from './pages/About'
-// import Header from './components/Header'
-// import SignUp from './pages/SignUp'
-// import SignInSide from './pages/SignInSide'
-//const Layout = lazy(() => import('./containers/Layout'))
+
 import Layout from './containers/Layout'
 //const Login = lazy(() => import('./pages/Login'))
 import Login from './pages/Login'
@@ -20,8 +15,7 @@ import CreateAccount from './pages/CreateAccount'
  //const ForgotPassword = lazy(() => import('./pages/ForgotPassword'))
 import ForgotPassword from './pages/ForgotPassword'
 import Home from './pages1/Home'
-// const Forms = lazy(() => import('./pages/Forms'))
-// const Cards = lazy(() => import('./pages/Cards'))
+import { SearchProvider } from './context/SearchContext'
 
 
 export default function App() {
@@ -39,6 +33,9 @@ export default function App() {
 <>
   <Router>
       <AccessibleNavigationAnnouncer />
+      <SearchProvider>
+      {/* Your application */}
+   
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<CreateAccount />} />
@@ -48,6 +45,7 @@ export default function App() {
         <Route path="/app/*" element={<Layout />} />
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>
+      </SearchProvider>
     </Router>
   </>
   )
