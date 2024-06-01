@@ -72,4 +72,3 @@ export const signin=async(req,res)=>{
         res.send(500).json(serverError());
     }
 }
-

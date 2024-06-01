@@ -38,7 +38,7 @@ function Login() {
 
       console.log('res = ', res)
       if(res.status==200){
-        navigate('/app/mydocuments',{replace:true});
+        navigate('/app/folders',{replace:true});
       }
 
     } catch (error) {

@@ -86,7 +86,20 @@ function handleSearchChange(event) {
             <div className="absolute inset-y-0 flex items-center pl-2">
               <SearchIcon className="w-4 h-4 b" aria-hidden="true"  />
             </div>
-            <Input className="pl-8 text-gray-700" placeholder="Search for documents" aria-label="Search" />
+            <Input
+  className="pl-8 text-gray-700"
+  placeholder={
+    location.pathname === '/app/folders'
+      ? 'Search in folders'
+      : location.pathname === '/app/folders/files/:folderId'
+      ? 'Search in files'
+      : location.pathname === '/app/notes'
+      ? 'Search in notes'
+      : 'Search'
+  }
+  aria-label="Search"
+  onChange={handleSearchChange} />
+
           </div>
         </div>
         <ul className="flex items-center flex-shrink-0 space-x-6">
