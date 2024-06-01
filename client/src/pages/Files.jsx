@@ -33,11 +33,7 @@ function Files() {
   const [isUploading, setIsUploading] = useState(false);
   const [allFiles, setAllFiles] = useState([]);
 
-  const [searchTerm ] = useContext(SearchContext)
-  const [filteredFiles, setFilteredFiles] = useState([])
-  
-
-  const [ searchTerm ] = useContext(SearchContext)
+  const { searchTerm } = useContext(SearchContext)
   const [filteredFiles, setFilteredFiles] = useState([])
   
 
@@ -59,7 +55,7 @@ function Files() {
       const res = await axios.get(`/api/folder/getFiles/${folderId}`, {
         withCredentials: true
       });
-      
+
       console.log(res);
       setAllFiles(res.data.payload);
     } catch (error) {
@@ -226,6 +222,5 @@ function Files() {
     </>
   )
 }
-
 
 export default Files
