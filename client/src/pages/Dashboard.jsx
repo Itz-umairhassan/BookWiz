@@ -6,7 +6,7 @@ import InfoCard from '../Cards/InfoCard'
 // import { Doughnut, Line } from 'react-chartjs-2'
 // import ChartLegend from '../components/Chart/ChartLegend'
 import PageTitle from '../Typography/PageTitle'
-import { ChatIcon, CartIcon, MoneyIcon, PeopleIcon } from '../icons'
+import { ChatIcon, CartIcon, MoneyIcon, PeopleIcon, ModalsIcon } from '../icons'
 import RoundIcon from '../components/RoundIcon'
 import response from '../utils/demo/tableData'
 import { Button} from '@windmill/react-ui'
@@ -121,7 +121,7 @@ function Dashboard() {
             return (
               <InfoCard _folder={folder}>
                 <RoundIcon
-                  icon={ChatIcon}
+                  icon={ModalsIcon}
                   iconColorClass="text-teal-500 dark:text-teal-100"
                   bgColorClass="bg-teal-100 dark:bg-teal-500"
                   className="mr-4"
