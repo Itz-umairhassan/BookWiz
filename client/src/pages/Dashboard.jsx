@@ -67,8 +67,15 @@ function Dashboard() {
       const res = await axios.get('/api/user/folders' , {
         withCredentials: true
       });
+      let dT;
+      if(res.data.payload){
+        dT=res.data.payload;
+      }else if(res.data.payload[0]){
+       dT=res.data.payload[0];
+      }
+      
 
-      const dT = res.data.payload[0];
+      
       console.log(res)
       setFolders(dT);
       console.log(dT);
