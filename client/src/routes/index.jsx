@@ -4,7 +4,7 @@ import { lazy } from 'react'
 // const  MyDocuments= lazy(() => import('../pages/Dashboard'))
 import MyDocuments from '../pages/Dashboard'
 import Notes from '../pages/Notes'
-import Profile from '../pages/Buttons'
+import Profile from '../pages/Profile'
 // const Charts = lazy(() => import('../pages/Charts'))
 import Trash from '../pages/Tables'
 import Files from '../pages/Files'

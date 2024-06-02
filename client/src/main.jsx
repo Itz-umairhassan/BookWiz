@@ -6,13 +6,16 @@ import { SidebarProvider } from './context/SidebarContext'
 import ThemedSuspense from './components/ThemedSuspense'
 import { Windmill } from '@windmill/react-ui'
 import * as serviceWorker from './serviceWorker'
+import { ContextProvider } from './context/Context.jsx'
 
 
 ReactDOM.render(
   <SidebarProvider>
     <Suspense fallback={<ThemedSuspense />}>
       <Windmill usePreferences>
+        <ContextProvider>
         <App />
+        </ContextProvider>
       </Windmill>
     </Suspense>
   </SidebarProvider>,

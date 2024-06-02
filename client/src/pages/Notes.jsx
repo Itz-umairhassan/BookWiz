@@ -44,7 +44,6 @@ function Notes() {
     const newNotes = [...allNotes];
     newNotes[index] = updatedNote;
     console.log("handled gracefuly");
-    // Update the state
     setAllNotes(newNotes);
   
   };
@@ -57,12 +56,12 @@ function Notes() {
   async function fetchNotes(){
     try{
       const res = await axios.post("/api/notes/fecthAll",{withCredentials:true});
-      console.log(res);
       setAllNotes(res.data.payload);
     }catch(error){
       console.log(error);
     }
   }
+  console.log(allNotes)
 
   const handleDeleteNote = async (noteId) => {
     try {
@@ -102,6 +101,7 @@ function Notes() {
       <AddNotesModal isModelOpen={isModalOpen} closeModal={closeModal} NoteAddCallBack={handleAddNote}/>
     
     </div>
+     
     <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
       { allNotes.length > 0 ? filteredNotes.map((note) => (
           <NoteCard _Note={note} NoteUpdateCallBack={handleNoteUpdate}  NoteDeleteCallBack={handleDeleteNote} >

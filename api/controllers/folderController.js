@@ -22,6 +22,7 @@ export const folderCreation =  async (req , res) =>{
         })
 
         const newFolder = await folder.save();
+        console.log(newFolder)
         
         const response = await User.findByIdAndUpdate(
             userObjId,
@@ -31,7 +32,7 @@ export const folderCreation =  async (req , res) =>{
                 }
             }
         )
-
+        console.log(response)  
         res.status(200).json(successMessage("folder created" , [newFolder,response]));
     }catch(error){
         console.log(`error: ${error}`);
