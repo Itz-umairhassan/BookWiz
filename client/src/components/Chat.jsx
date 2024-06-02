@@ -18,6 +18,8 @@ function Chat() {
   }
 
   useEffect(scrollToBottom, [chat]);
+  console.log(chat)
+  
 
   async function sendMessage() {
     if (message.trim() !== '') {
