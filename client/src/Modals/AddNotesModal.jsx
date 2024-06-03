@@ -3,11 +3,13 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Input,Label, Textar
 import axios from 'axios';
 
 function AddNotesModal({ NoteAddCallBack, isModelOpen, closeModal }) {
-    const [formData, setFormData] = useState({
-      name: '',
-      model_content: '',
-      user_content: ''
-    })
+  
+  const initialFormData = {
+    name: '',
+    user_content: '',
+    user_content: ''
+  };
+  const [formData, setFormData] = useState(initialFormData)
   
     const handleChange = (e) => {
       setFormData({ ...formData, [e.target.id]: e.target.value })
@@ -20,6 +22,7 @@ function AddNotesModal({ NoteAddCallBack, isModelOpen, closeModal }) {
         })
   
         NoteAddCallBack(resp.data.payload[0])
+        setFormData(initialFormData);
         closeModal()
       } catch (error) {
         console.error(error)

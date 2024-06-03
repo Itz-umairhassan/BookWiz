@@ -56,7 +56,9 @@ function Notes() {
   async function fetchNotes(){
     try{
       const res = await axios.post("/api/notes/fecthAll",{withCredentials:true});
+console.log("setting notes")
       setAllNotes(res.data.payload);
+      console.log(allNotes)
     }catch(error){
       console.log(error);
     }
