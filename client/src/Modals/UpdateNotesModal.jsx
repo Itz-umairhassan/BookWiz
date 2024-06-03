@@ -23,6 +23,7 @@ function UpdateNotesModal({ _Note, NoteUpdateCallBack, isModelOpen,closeModal })
         withCredentials: true
       })
       NoteUpdateCallBack(resp.data.payload[0])
+      
       closeModal()
     } catch (error) {
       console.error(error)
