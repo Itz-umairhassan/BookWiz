@@ -1,20 +1,23 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import PageTitle from '../Typography/PageTitle'
 import SectionTitle from '../Typography/SectionTitle'
 import CTA from '../components/CTA'
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Input} from '@windmill/react-ui'
 import axios from 'axios'
+import { Context } from '../context/Context'
 
 function CreateFolderModal({ isModelOpen,closeModal }) {
+    const {user}=useContext(Context)
     const [folderName , setFolderName] = useState("");
     const handleChange = (e) => {
         setFolderName(e.target.value);
     }
-
+   console.log(user)
     const handleFolderCreation = async ()=>{
         try{
             const payloadData = {
+                "userId":user._id,
                 "folderName":folderName,
                 "status":"private"
             }

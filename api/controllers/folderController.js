@@ -67,8 +67,8 @@ export const removeFolder = async (req  ,res)=>{
     try{
 
         const {folderId} = req.body;
-        const userId = req.userId;
-
+        const userId = req.body.userId;
+        
         const user = await User.findById(new mongodb.ObjectId(userId));
         const folder = await Folder.findById(new mongodb.ObjectId(folderId));
         
@@ -77,6 +77,13 @@ export const removeFolder = async (req  ,res)=>{
             return;
         }
         // delete the folder now...
+        if(folder.files.length>0){
+            console.log('files deleted before')
+            await File.deleteMany({_id:{$in:folder.files}});
+        }
+        
+        console.log("all files has been deleted");
+        // await User.findByIdAndDelete(folderId);
         const response = await Folder.findByIdAndDelete(new mongodb.ObjectId(folderId));
 
         res.status(200).json(successMessage("folder deleted" , [response]))

@@ -198,9 +198,7 @@ function Files() {
                   <span className="text-sm">{new Date(file.createdAt).toLocaleDateString()}</span>
                 </TableCell>
                 <TableCell>
-            
-                  
-                  <Dropdown fileId={file._id} handleChatNavigation={handleChatNavigation} onDelete={onDelete} />
+                <Dropdown fileId={file._id} handleChatNavigation={handleChatNavigation} onDelete={onDelete} />
                   
                 </TableCell>
               </TableRow>
