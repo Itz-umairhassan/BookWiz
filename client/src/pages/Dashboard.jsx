@@ -33,13 +33,15 @@ import { Alert } from '@windmill/react-ui'
 function Dashboard() {
   const [page, setPage] = useState(1)
   const [data, setData] = useState([])
-  const [folders , setFolders] = useState([]);
+
   const [spin , setSpin] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const { searchTerm } = useContext(SearchContext)
-  const [filteredFolders, setFilteredFolders] = useState([])
 
+  const [filteredFolders, setFilteredFolders] = useState([])
+  //const [allNotes, setAllNotes] = useState([]) 
+  const [folders , setFolders] = useState([]);
 
   function openModal() {
     setIsModalOpen(true)
@@ -61,6 +63,7 @@ function Dashboard() {
   }
 
   const fetchFolders = async () => {
+
     setSpin(true);
 
     try{
@@ -74,11 +77,11 @@ function Dashboard() {
        dT=res.data.payload[0];
       }
       
-
+console.log("setting folders with data")
       
       console.log(res)
       setFolders(dT);
-      console.log(dT);
+      console.log(folders);
       setSpin(false);
     }catch(error){
       console.error(error);
@@ -89,10 +92,10 @@ function Dashboard() {
   // on page change, load new sliced data
   // here you would make another server request for new data
   useEffect(() => {
-    setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage));
+   // setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage));
     console.log("home triggered");
     fetchFolders();
-  }, [page])
+  }, [])
 
   useEffect(() => {
     if (searchTerm) {
@@ -107,7 +110,39 @@ function Dashboard() {
 
   // Rest of your component
   // Replace allFolders with filteredFolders in your rendering code
+  const handleFolderUpdate = (updatedFolder) => {
+    // Find the index of the updated folder in the folders array
+    const folderIndex = folders.findIndex(folder => folder._id === updatedFolder._id);
+    
+    // If the updated folder is found, update it in the folders array
+    if (folderIndex !== -1) {
+      setFilteredFolders(prevFolders => {
+        const updatedFolders = [...prevFolders];
+        updatedFolders[folderIndex] = updatedFolder;
+        return updatedFolders;
+      });
+    }
+  }
 
+  const handleDeleteFolder = async (folderId) => {
+    try {
+      // Make a DELETE request to the server to delete the folder
+      const deleteResponse= await axios.post(`/api/folder/remove/${folderId}`, {
+        withCredentials: true
+      });
+
+      if (deleteResponse.status === 200) {
+        // Remove the deleted folder from the folders state
+         setFolders(prevFolders => prevFolders.filter(folder => folder._id !== folderId));
+        // // Also remove the deleted folder from the filteredFolders state
+        // setFilteredFolders(prevFolders => prevFolders.filter(folder => folder._id !== folderId));
+        console.log("fetching")
+       // fetchFolders();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <>
@@ -126,7 +161,8 @@ function Dashboard() {
           folders.length > 0 ?
           (filteredFolders.map((folder) => {
             return (
-              <InfoCard _folder={folder}>
+              //_Note={note} NoteUpdateCallBack={handleNoteUpdate}  NoteDeleteCallBack={handleDeleteNote} >
+              <InfoCard _Folder={folder}  FolderUpdateCallBack={handleFolderUpdate}  FolderDeleteCallBack={handleDeleteFolder} >
                 <RoundIcon
                   icon={ChatIcon}
                   iconColorClass="text-teal-500 dark:text-teal-100"
@@ -137,9 +173,9 @@ function Dashboard() {
             )
           }))
           : (
-            <p className="text-gray-700 dark:text-gray-300">
+            <div className="text-gray-700 dark:text-gray-300">
               No Folders Found
-            </p>
+            </div>
           )
         )}
       </div>

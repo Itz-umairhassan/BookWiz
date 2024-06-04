@@ -65,10 +65,11 @@ export const getAllFiles = async (req , res)=>{
 
 export const removeFolder = async (req  ,res)=>{
     try{
+console.log("in remove")
+        //const {folderId} = req.body;
+        const folderId = req.params.folderId;
+        const userId = req.userId;
 
-        const {folderId} = req.body;
-        const userId = req.body.userId;
-        
         const user = await User.findById(new mongodb.ObjectId(userId));
         const folder = await Folder.findById(new mongodb.ObjectId(folderId));
         
@@ -93,5 +94,28 @@ export const removeFolder = async (req  ,res)=>{
         console.log(`error: ${error}`)
         res.status(500).json(serverError())
 
+    }
+}
+export const editFolder = async (req, res) => {
+    try {
+        console.log("inside edit")
+        const { folderId, folderName } = req.body;
+        const userId = req.userId;
+
+        const user = await User.findById(new mongodb.ObjectId(userId));
+        const folder = await Folder.findById(new mongodb.ObjectId(folderId));
+console.log(user+"\t"+folder)
+        if (!(folder["owner"].equals(user["_id"]))) {
+            res.status(500).json(errorMessage("no right to edit the folder"));
+            return;
+        }
+
+        folder.folderName = folderName;
+        const updatedFolder = await folder.save();
+
+        res.status(200).json(successMessage("folder updated", [updatedFolder]));
+    } catch (error) {
+        console.log(`error: ${error}`);
+        res.status(500).json(serverError());
     }
 }

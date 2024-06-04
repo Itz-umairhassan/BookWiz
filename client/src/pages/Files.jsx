@@ -57,6 +57,7 @@ function Files() {
       });
 
       console.log(res);
+      
       setAllFiles(res.data.payload);
     } catch (error) {
       console.log(error);
