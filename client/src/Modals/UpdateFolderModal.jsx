@@ -12,7 +12,7 @@ function UpdateFolderModal({_Folder, FolderUpdateCallBack, isModelOpen,closeModa
     useEffect(() => {
         setFolderName(_Folder.folderName);
     }, [_Folder]);
-
+    console.log("iN UPDATED",_Folder)
     const handleChange = (e) => {
         setFolderName(e.target.value);
     }
@@ -22,11 +22,14 @@ function UpdateFolderModal({_Folder, FolderUpdateCallBack, isModelOpen,closeModa
             const payloadData = {
                 "folderId":_Folder._id,
                 "folderName":folderName,
-                "status":"private"
+                "_status":"private"
             }
+            console.log("FOLDERNAME",folderName)
+            console.log("payload",_Folder)
             const res = await axios.post(`/api/folder/editFolder`, payloadData,{
                 withCredentials: true
             });
+
             if(res.status===200)
                 {
                     console.log("updated")

@@ -37,6 +37,7 @@ function DropdownExample({ _Folder, FolderDeleteCallBack, FolderUpdateCallBack, 
             setIsMenuOpen(false);
         }
     };
+    console.log(_Folder);
     //   useEffect(() => {
     //     document.addEventListener('mousedown', handleClickOutside);
     //     return () => {

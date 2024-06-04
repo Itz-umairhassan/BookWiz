@@ -6,7 +6,7 @@ import InfoCard from '../Cards/InfoCard'
 // import { Doughnut, Line } from 'react-chartjs-2'
 // import ChartLegend from '../components/Chart/ChartLegend'
 import PageTitle from '../Typography/PageTitle'
-import { ChatIcon, CartIcon, MoneyIcon, PeopleIcon, ModalsIcon } from '../icons'
+import { ChatIcon, CartIcon, MoneyIcon, PeopleIcon } from '../icons'
 import RoundIcon from '../components/RoundIcon'
 import response from '../utils/demo/tableData'
 import { Button} from '@windmill/react-ui'
@@ -164,7 +164,7 @@ console.log("setting folders with data")
               //_Note={note} NoteUpdateCallBack={handleNoteUpdate}  NoteDeleteCallBack={handleDeleteNote} >
               <InfoCard _Folder={folder}  FolderUpdateCallBack={handleFolderUpdate}  FolderDeleteCallBack={handleDeleteFolder} >
                 <RoundIcon
-                  icon={ModalsIcon}
+                  icon={ChatIcon}
                   iconColorClass="text-teal-500 dark:text-teal-100"
                   bgColorClass="bg-teal-100 dark:bg-teal-500"
                   className="mr-4"

@@ -4,11 +4,12 @@ import {folderCreation , getAllFiles , removeFolder, editFolder} from "../contro
 const router = express.Router();
 
 router.use(validateUser);
-router.use(userExists);
+// router.use(userExists);
 
 
 router.post('/create' , folderCreation);
-router.get('/getFiles/:folderId' ,folderExists, userFolderAuth, getAllFiles);
+router.get('/getFiles/:folderId' ,folderExists, getAllFiles);
+// router.post('/remove' ,folderExists,removeFolder);
 router.post('/remove/:folderId' ,folderExists,userFolderAuth, removeFolder);
 router.post('/editFolder' ,folderExists,userFolderAuth, editFolder);
 

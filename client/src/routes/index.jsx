@@ -9,6 +9,7 @@ import Profile from '../pages/Profile'
 import Trash from '../pages/Tables'
 import Files from '../pages/Files'
 import Chat from '../components/Chat'
+import ChatHistory from '../pages/ChatHistory'
 // const Modals = lazy(() => import('../pages/Modals'))
 // const Tables = lazy(() => import('../pages/Tables'))
 // const Page404 = lazy(() => import('../pages/404'))
@@ -52,6 +53,10 @@ const routes = [
   {
     path: '/chat/:fileId',
     component: Chat,
+  },
+  {
+    path : '/chat_history',
+    component: ChatHistory
   },
   // {
   //   path: '/404',
