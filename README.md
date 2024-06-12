@@ -31,6 +31,7 @@ BookWiz is a web application built with Express.js and React.js that allows user
 - Node.js
 - MongoDB
 - npm or yarn
+- React Js
 
 ## Installation 🔧
 
@@ -38,3 +39,16 @@ BookWiz is a web application built with Express.js and React.js that allows user
    ```bash
    git clone git@github.com:umair-hassan2/BookWiz.git
    cd BookWiz
+2. **install dependencies**
+   ```bash
+   npm install
+   cd client
+   npm install
+3. **run server**
+   ```bash
+   npm run
+   cd client
+   npm run dev
+4. **test servers**
+   - visit link in broswer to test the application
+   - send request to 'localhost:3001/api/user/test' to check backend
