@@ -14,7 +14,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser';
 import {makeConecction} from './controllers/connetionController.js' 
 
-const PORT_NUMBER = 3001
+const PORT_NUMBER = process.env.PORT || 3001
 
 dotenv.config()
 const app=express();
@@ -37,6 +37,6 @@ app.use("/api/folder" , folderRoutes);
 app.use('/api/notes',notesRoutes);
 app.use('/api/chat' ,chatRoutes);
 
-app.listen(PORT_NUMBER , ()=>{
+app.listen(PORT_NUMBER ,"0.0.0.0", ()=>{
     console.log(`App is listening at PORT = ${PORT_NUMBER}`)
 })
